@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pedro Henrique Marcelino — Desenvolvedor Fullstack &amp; Suporte de TI</title>
+  <meta name="description" content="Portfólio de Pedro Henrique Marcelino, desenvolvedor fullstack júnior e suporte de TI em Leme/SP. Sistemas SaaS e corporativos, integrações com APIs REST, bancos de dados, infraestrutura em VPS e vídeos de marketing com IA.">
+  <meta name="author" content="Pedro Henrique Marcelino">
+  <meta name="theme-color" content="#07070a">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Compartilhamento em redes sociais. Depois de publicar, troque o caminho da imagem por uma URL absoluta
+       (ex.: https://seu-dominio.com/assets/img/og-image.jpg) — LinkedIn e WhatsApp exigem URL completa. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Pedro Henrique Marcelino">
+  <meta property="og:title" content="Pedro Henrique Marcelino — Desenvolvedor Fullstack &amp; Suporte de TI">
+  <meta property="og:description" content="Sistemas SaaS e corporativos, APIs REST, dados e infraestrutura. Conheça meus projetos e minha trajetória.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pedro Henrique Marcelino — Desenvolvedor Fullstack e Suporte de TI">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Pedro Henrique Marcelino",
+    "jobTitle": "Desenvolvedor Fullstack Júnior e Suporte de TI",
+    "description": "Desenvolvedor fullstack júnior e suporte de TI, com foco em sistemas SaaS e corporativos, integrações com APIs REST, bancos de dados e infraestrutura em VPS.",
+    "image": "assets/img/pedro-henrique-marcelino.webp",
+    "email": "mailto:pedromarcelinoh7@gmail.com",
+    "worksFor": { "@type": "Organization", "name": "Kybernan" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Leme", "addressRegion": "SP", "addressCountry": "BR" },
+    "alumniOf": { "@type": "EducationalOrganization", "name": "ETEC Deputado Salim Sedeh" },
+    "knowsAbout": ["Desenvolvimento Fullstack", "APIs REST", "Arquitetura SaaS", "SQL", "Supabase", "Firebase", "Infraestrutura VPS", "Suporte de TI", "Vídeos com IA generativa", "Google Flow", "ElevenLabs"],
+    "knowsLanguage": ["pt-BR", "en"],
+    "sameAs": [
+      "https://www.linkedin.com/in/pedro-henrique-marcelino-/",
+      "https://github.com/Dev-PedroMarcelino"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="fx-bg" aria-hidden="true"></div>
+
+  <!-- ===================================================== STATUS BAR (HUD) -->
+  <div class="statusbar">
+    <div class="container statusbar__inner">
+      <p class="statusbar__item statusbar__item--live"><span class="pulse" aria-hidden="true"></span>Online</p>
+      <p class="statusbar__item statusbar__item--wide">Disponível para presencial e home office</p>
+      <p class="statusbar__item"><span class="statusbar__item--wide">Leme — SP ·&nbsp;</span><time data-clock>--:--</time>&nbsp;<span class="statusbar__muted">BRT</span></p>
+    </div>
+  </div>
+
+  <!-- ===================================================== HEADER / NAV -->
+  <header class="site-header" data-header>
+    <div class="container navbar">
+      <a class="brand" href="#inicio" aria-label="Pedro Henrique Marcelino, voltar ao início">
+        <span class="brand__mark" aria-hidden="true">PH</span>
+        <span class="brand__text" aria-hidden="true">
+          <span class="brand__name">Pedro Henrique</span>
+          <span class="brand__role">Fullstack · Suporte de TI</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-nav-toggle>
+        <span class="nav-toggle__label" data-nav-label>Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true"><span></span><span></span></span>
+      </button>
+
+      <nav class="nav" id="menu" aria-label="Navegação principal" data-nav>
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#perfil"><span class="nav__index">01</span>Perfil</a></li>
+          <li><a class="nav__link" href="#projetos"><span class="nav__index">02</span>Projetos</a></li>
+          <li><a class="nav__link" href="#trajetoria"><span class="nav__index">03</span>Trajetória</a></li>
+          <li><a class="nav__link" href="#stack"><span class="nav__index">04</span>Stack</a></li>
+          <li><a class="nav__link" href="#contato"><span class="nav__index">05</span>Contato</a></li>
+        </ul>
+        <a class="btn btn--sm nav__cta" href="assets/docs/curriculo-pedro-henrique-marcelino.pdf" download="Curriculo-Pedro-Henrique-Marcelino.pdf">
+          Currículo <span class="btn__icon" aria-hidden="true">↓</span>
+        </a>
+        <p class="nav__footer">
+          <a href="mailto:pedromarcelinoh7@gmail.com">E-mail</a>
+          <a href="https://www.linkedin.com/in/pedro-henrique-marcelino-/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/Dev-PedroMarcelino" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+        </p>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ===================================================== HERO -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow" data-reveal>
+            <span class="eyebrow__tag" aria-hidden="true">ID // PH-2077</span>
+            <span data-decode>Desenvolvedor Fullstack Júnior · Suporte de TI</span>
+          </p>
+
+          <h1 class="hero__title" id="hero-title" aria-label="Pedro Henrique Marcelino">
+            <span class="hero__line" style="--delay: 150ms"><span class="glitch" data-text="Pedro Henrique">Pedro Henrique</span></span>
+            <span class="hero__line hero__line--accent" style="--delay: 420ms"><span class="glitch" data-text="Marcelino">Marcelino</span></span>
+          </h1>
+
+          <p class="hero__lead" data-reveal data-reveal-delay="650">
+            Construo <strong>sistemas SaaS e corporativos</strong> que conectam APIs, bancos de dados e a operação real das empresas — e mantenho a infraestrutura rodando quando ela mais importa.
+          </p>
+
+          <div class="hero__actions" data-reveal data-reveal-delay="800">
+            <a class="btn" href="#projetos">Ver projetos <span class="btn__icon" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="assets/docs/curriculo-pedro-henrique-marcelino.pdf" download="Curriculo-Pedro-Henrique-Marcelino.pdf">Baixar currículo <span class="btn__icon" aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+
+        <figure class="portrait" data-reveal data-reveal-delay="250">
+          <div class="portrait__frame">
+            <img class="portrait__img" src="assets/img/pedro-henrique-marcelino.webp" width="1086" height="1448"
+                 alt="Pedro Henrique Marcelino, de suéter preto e corrente prateada, em retrato sobre fundo escuro"
+                 fetchpriority="high" decoding="async">
+            <span class="portrait__scanline" aria-hidden="true"></span>
+            <span class="portrait__reticle" aria-hidden="true"><span class="portrait__target">Alvo identificado</span></span>
+            <span class="portrait__tag" aria-hidden="true">Scan // 07</span>
+          </div>
+          <figcaption class="scan-card">
+            <span class="scan-card__head" aria-hidden="true"><span>Kiroshi optics</span><span>Scan ok</span></span>
+            <dl class="scan-card__list">
+              <div><dt>Nome</dt><dd data-decode>Pedro H. Marcelino</dd></div>
+              <div><dt>Classe</dt><dd data-decode>Fullstack / Suporte TI</dd></div>
+              <div><dt>Afiliação</dt><dd data-decode>Kybernan</dd></div>
+              <div><dt>Ameaça</dt><dd class="scan-card__threat" data-decode>Só para bugs</dd></div>
+            </dl>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================================================== FATOS RÁPIDOS -->
+    <div class="facts">
+      <ul class="container facts__grid" aria-label="Resumo rápido">
+        <li class="fact" data-reveal>
+          <span class="fact__label">Atual</span>
+          <strong class="fact__value">Kybernan</strong>
+          <span class="fact__sub">Suporte de TI &amp; Dev Fullstack · jun 2026 — hoje</span>
+        </li>
+        <li class="fact" data-reveal>
+          <span class="fact__label">Formação</span>
+          <strong class="fact__value">Sistemas de Informação</strong>
+          <span class="fact__sub">FHO Uniararas · previsão 2028</span>
+        </li>
+        <li class="fact" data-reveal>
+          <span class="fact__label">Base</span>
+          <strong class="fact__value">Leme — SP</strong>
+          <span class="fact__sub">Presencial ou home office · CNH AB</span>
+        </li>
+        <li class="fact" data-reveal>
+          <span class="fact__label">Idiomas</span>
+          <strong class="fact__value">PT · EN</strong>
+          <span class="fact__sub">Português nativo · inglês intermediário</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ===================================================== 01 PERFIL // CHARACTER -->
+    <section class="section" id="perfil" aria-labelledby="perfil-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="kicker" data-reveal><span class="kicker__index">01</span>Perfil<span class="kicker__game" lang="en">Character</span></p>
+          <h2 class="section__title" id="perfil-title" data-reveal>Do código à <span class="accent">operação real.</span></h2>
+        </header>
+
+        <div class="profile">
+          <div class="profile__bio" data-reveal>
+            <p class="profile__quote">Tecnologia boa não é só <em>futurista</em> — é a que melhora o trabalho de alguém hoje.</p>
+            <p>
+              Sou <strong>desenvolvedor fullstack júnior e suporte de TI na Kybernan</strong>, em Leme (SP). No dia a dia, desenvolvo e mantenho sistemas SaaS e corporativos — das regras de negócio e interfaces às integrações com APIs REST e bancos de dados relacionais e NoSQL — e cuido da infraestrutura em servidores VPS para que rotinas críticas não parem.
+            </p>
+            <p>
+              Trabalhar dos dois lados, construindo o software e apoiando quem depende dele, me deu uma <strong>visão de ponta a ponta</strong>: entendo o problema na operação, traduzo em solução técnica e acompanho até ela rodar em produção. Antes disso, como consultor de robótica educacional, desenvolvia algoritmos em C para sistemas embarcados e ensinava lógica de programação.
+            </p>
+            <p>
+              Também tenho um lado criativo forte: produzo <strong>vídeos de marketing com IA</strong> para o Instagram da @kyberfood, com cenas geradas no Google Flow, vozes no ElevenLabs e edição manual.
+            </p>
+            <p>
+              Hoje curso <strong>Sistemas de Informação na FHO Uniararas</strong> e sigo construindo soluções escaláveis, confiáveis e centradas na eficiência do negócio.
+            </p>
+          </div>
+
+          <div class="profile__attrs">
+            <p class="panel-label" data-reveal>Atributos <span lang="en">// Attributes</span></p>
+            <ul class="attrs">
+              <li class="attr panel" data-reveal>
+                <span class="attr__code" aria-hidden="true">INT</span>
+                <div>
+                  <p class="attr__name" lang="en">Intelligence</p>
+                  <h3 class="attr__title">Lógica &amp; pensamento crítico</h3>
+                  <p class="attr__text">Lógica algorítmica e questionamento construtivo para entender o problema antes de propor a solução.</p>
+                </div>
+              </li>
+              <li class="attr panel" data-reveal>
+                <span class="attr__code" aria-hidden="true">TECH</span>
+                <div>
+                  <p class="attr__name" lang="en">Technical Ability</p>
+                  <h3 class="attr__title">Fullstack de ponta a ponta</h3>
+                  <p class="attr__text">Regras de negócio, interfaces, APIs REST e bancos de dados, com boas práticas e Clean Code.</p>
+                </div>
+              </li>
+              <li class="attr panel" data-reveal>
+                <span class="attr__code" aria-hidden="true">REF</span>
+                <div>
+                  <p class="attr__name" lang="en">Reflexes</p>
+                  <h3 class="attr__title">Suporte &amp; infraestrutura</h3>
+                  <p class="attr__text">Servidores VPS, rotinas sincronizadas e resposta rápida para manter serviços críticos no ar.</p>
+                </div>
+              </li>
+              <li class="attr panel" data-reveal>
+                <span class="attr__code" aria-hidden="true">COOL</span>
+                <div>
+                  <p class="attr__name" lang="en">Cool</p>
+                  <h3 class="attr__title">Comunicação &amp; tradução técnica</h3>
+                  <p class="attr__text">Explico o técnico com clareza para quem opera, aprende ou decide — e colaboro bem em equipe.</p>
+                </div>
+              </li>
+              <li class="attr panel" data-reveal>
+                <span class="attr__code" aria-hidden="true">BODY</span>
+                <div>
+                  <p class="attr__name" lang="en">Body</p>
+                  <h3 class="attr__title">Adaptabilidade &amp; aprendizado</h3>
+                  <p class="attr__text">Resiliência, organização e curiosidade ativa para aprender rápido o que cada projeto exige.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== 02 PROJETOS // JOURNAL -->
+    <section class="section" id="projetos" aria-labelledby="projetos-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="kicker" data-reveal><span class="kicker__index">02</span>Projetos<span class="kicker__game" lang="en">Journal</span></p>
+          <h2 class="section__title" id="projetos-title" data-reveal>Missões em <span class="accent">produção.</span></h2>
+          <p class="section__intro" data-reveal>Produtos em operação, projetos acadêmicos e experimentos — sempre com o mesmo objetivo: menos trabalho manual, dados confiáveis e interfaces que acompanham o ritmo do negócio.</p>
+        </header>
+
+        <!-- Main jobs -->
+        <div class="journal-group">
+          <div class="group-head" data-reveal>
+            <h3 class="group-head__title">Em destaque</h3>
+            <span class="group-head__game" lang="en">Main jobs</span>
+            <span class="group-head__count" aria-hidden="true">04</span>
+          </div>
+
+          <div class="jobs">
+            <article class="job panel" data-reveal data-spotlight>
+              <div class="job__top">
+                <span class="job__id">Job 01</span>
+                <span class="status status--live">Em operação</span>
+              </div>
+              <div class="pipeline" aria-hidden="true">
+                <span class="pipeline__node">Pesagem</span><span class="pipeline__link"></span>
+                <span class="pipeline__node">Carregamento</span><span class="pipeline__link"></span>
+                <span class="pipeline__node pipeline__node--end">OMIE</span>
+              </div>
+              <p class="job__type">SaaS corporativo · Integração ERP</p>
+              <h4 class="job__title">Kyberrock</h4>
+              <p class="job__subtitle">Gestão industrial e balança rodoviária para pedreiras</p>
+              <p class="job__desc">Sistema de gestão e operação para pedreiras, integrado nativamente ao ERP OMIE: faz a pesagem na balança rodoviária, organiza o carregamento e integra o faturamento. Atuo no desenvolvimento e na sustentação do produto.</p>
+              <ul class="job__list">
+                <li>Interface direta com a balança rodoviária, que segue operando mesmo sem internet</li>
+                <li>Consumo massivo de APIs e sincronização complexa de dados com o OMIE</li>
+                <li>Gestor, comercial, carregador e diretoria acompanham tudo ao vivo, no computador ou no celular</li>
+              </ul>
+              <ul class="tags" aria-label="Tecnologias e temas">
+                <li>ERP OMIE</li><li>APIs REST</li><li>Sincronização de dados</li><li>Operação offline</li><li>Tempo real</li>
+              </ul>
+              <div class="job__foot">
+                <span class="job__note">Código proprietário · Kybernan</span>
+              </div>
+            </article>
+
+            <article class="job panel" data-reveal data-spotlight>
+              <div class="job__top">
+                <span class="job__id">Job 02</span>
+                <span class="status status--live">Em operação</span>
+              </div>
+              <div class="pipeline" aria-hidden="true">
+                <span class="pipeline__node">Pedidos</span><span class="pipeline__link"></span>
+                <span class="pipeline__node">Automação</span><span class="pipeline__link"></span>
+                <span class="pipeline__node pipeline__node--end">Retenção</span>
+              </div>
+              <p class="job__type">SaaS · Automação &amp; IA</p>
+              <h4 class="job__title">Kyberfood</h4>
+              <p class="job__subtitle">Pedidos e gestão para gastronomia</p>
+              <p class="job__desc">Participação no desenvolvimento de um ecossistema SaaS com IA integrada para o setor de gastronomia, criando recursos com foco em automação operacional, retenção de clientes e usabilidade.</p>
+              <ul class="job__list">
+                <li>Recursos de automação que tiram trabalho manual da operação</li>
+                <li>Funcionalidades voltadas à retenção e ao retorno de clientes</li>
+                <li>Melhorias contínuas de usabilidade nas interfaces</li>
+              </ul>
+              <ul class="tags" aria-label="Tecnologias e temas">
+                <li>SaaS</li><li>IA integrada</li><li>Automação</li><li>UX</li>
+              </ul>
+              <div class="job__foot">
+                <span class="job__note">Código proprietário · Kybernan</span>
+              </div>
+            </article>
+
+            <article class="job panel" data-reveal data-spotlight>
+              <div class="job__top">
+                <span class="job__id">Job 03</span>
+                <span class="status status--demo">Demo online</span>
+              </div>
+              <div class="pipeline" aria-hidden="true">
+                <span class="pipeline__node">WhatsApp</span><span class="pipeline__link"></span>
+                <span class="pipeline__node">IA</span><span class="pipeline__link"></span>
+                <span class="pipeline__node">PDF</span><span class="pipeline__link"></span>
+                <span class="pipeline__node pipeline__node--end">CRM</span>
+              </div>
+              <p class="job__type">SaaS B2B · IA + WhatsApp</p>
+              <h4 class="job__title">KyberGo</h4>
+              <p class="job__subtitle">Orçamentos profissionais por IA, direto no WhatsApp</p>
+              <p class="job__desc">Plataforma multi-tenant para empresas de serviço. A IA conversa com o cliente no WhatsApp (texto ou áudio), aplica as regras de cálculo da empresa, gera a proposta em PDF, cria o lead no CRM e agenda o follow-up.</p>
+              <ul class="job__list">
+                <li>Dois modos de orçamento: por regras configuradas ou documento livre — sem a IA inventar preço</li>
+                <li>CRM Kanban, automações de follow-up, editor visual de PDF e planos de assinatura</li>
+                <li>Integrações desacopladas por adaptadores: WhatsApp, IA e cobrança</li>
+              </ul>
+              <ul class="tags" aria-label="Tecnologias e temas">
+                <li>Next.js 15</li><li>TypeScript</li><li>Supabase</li><li>Tailwind</li><li>IA</li>
+              </ul>
+              <div class="job__foot">
+                <a class="link-arrow" href="https://kyber-go.vercel.app" target="_blank" rel="noopener">Ver demo<span class="sr-only"> do KyberGo (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+                <a class="link-arrow link-arrow--muted" href="https://github.com/Dev-PedroMarcelino/KyberGo" target="_blank" rel="noopener">Código<span class="sr-only"> do KyberGo no GitHub (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article class="job panel" data-reveal data-spotlight>
+              <div class="job__top">
+                <span class="job__id">Job 04</span>
+                <span class="status status--academic">Acadêmico</span>
+              </div>
+              <div class="pipeline" aria-hidden="true">
+                <span class="pipeline__node">Texto + imagem</span><span class="pipeline__link"></span>
+                <span class="pipeline__node">Gemini</span><span class="pipeline__link"></span>
+                <span class="pipeline__node pipeline__node--end">Mapa</span>
+              </div>
+              <p class="job__type">Projeto acadêmico · Web inteligente</p>
+              <h4 class="job__title">SustentaAI</h4>
+              <p class="job__subtitle">Plataforma web de sustentabilidade com IA</p>
+              <p class="job__desc">Arquitetura fullstack integrada às APIs do Google Gemini e do Google Maps para analisar o conteúdo enviado pelo usuário e localizar postos de reciclagem por geolocalização.</p>
+              <ul class="job__list">
+                <li>Análise multimodal de texto e imagem com Google Gemini</li>
+                <li>Validação assíncrona das informações enviadas</li>
+                <li>Geolocalização de postos de reciclagem com Google Maps</li>
+              </ul>
+              <ul class="tags" aria-label="Tecnologias e temas">
+                <li>Google Gemini API</li><li>Google Maps API</li><li>Fullstack</li><li>Geolocalização</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- Criativos com IA (braindance) -->
+        <div class="journal-group">
+          <div class="group-head" data-reveal>
+            <h3 class="group-head__title">Criativos com IA</h3>
+            <span class="group-head__game" lang="en">Braindance</span>
+            <span class="group-head__count" aria-hidden="true">01</span>
+          </div>
+
+          <article class="job bd panel" data-reveal data-spotlight>
+            <div class="bd__main">
+              <div class="job__top">
+                <span class="job__id">BD 01</span>
+                <span class="status status--live">No ar</span>
+              </div>
+              <p class="job__type">Marketing · IA generativa · Vídeo</p>
+              <h4 class="job__title">Vídeos criativos com IA</h4>
+              <p class="job__subtitle">Reels e criativos para o Instagram @kyberfood</p>
+              <p class="job__desc">Do conceito ao vídeo final: produzo vídeos de marketing para a KyberFood combinando geração de cenas por IA, locução com voz sintética e edição manual, com ritmo e acabamento de peça publicitária.</p>
+              <ul class="job__list">
+                <li>Geração de cenas com IA no Google Flow</li>
+                <li>Vozes e locução com ElevenLabs</li>
+                <li>Edição manual: cortes, ritmo e finalização no formato vertical para Reels</li>
+              </ul>
+              <ul class="tags" aria-label="Ferramentas e temas">
+                <li>Google Flow</li><li>ElevenLabs</li><li>Edição de vídeo</li><li>Reels</li><li>Marketing</li>
+              </ul>
+              <div class="job__foot">
+                <a class="link-arrow" href="https://www.instagram.com/kyberfood/" target="_blank" rel="noopener">Ver no Instagram<span class="sr-only"> (@kyberfood, abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+
+            <ol class="bd-steps" aria-label="Fluxo de produção">
+              <li class="bd-step">
+                <span class="bd-step__index" aria-hidden="true">01</span>
+                <div>
+                  <span class="bd-step__layer" lang="en">Script</span>
+                  <p class="bd-step__title">Conceito &amp; prompts</p>
+                  <p class="bd-step__text">Ideia, roteiro e prompts pensados cena a cena.</p>
+                </div>
+              </li>
+              <li class="bd-step bd-step--visual">
+                <span class="bd-step__index" aria-hidden="true">02</span>
+                <div>
+                  <span class="bd-step__layer" lang="en">Visual layer</span>
+                  <p class="bd-step__title">Geração no Google Flow</p>
+                  <p class="bd-step__text">Cenas geradas por IA a partir dos prompts e das referências.</p>
+                </div>
+              </li>
+              <li class="bd-step bd-step--audio">
+                <span class="bd-step__index" aria-hidden="true">03</span>
+                <div>
+                  <span class="bd-step__layer" lang="en">Audio layer</span>
+                  <p class="bd-step__title">Voz no ElevenLabs</p>
+                  <p class="bd-step__text">Locução e vozes sob medida para cada peça.</p>
+                </div>
+              </li>
+              <li class="bd-step bd-step--edit">
+                <span class="bd-step__index" aria-hidden="true">04</span>
+                <div>
+                  <span class="bd-step__layer" lang="en">Edit</span>
+                  <p class="bd-step__title">Edição manual</p>
+                  <p class="bd-step__text">Cortes, ritmo e finalização para o feed.</p>
+                </div>
+              </li>
+            </ol>
+          </article>
+        </div>
+
+        <!-- Side jobs -->
+        <div class="journal-group">
+          <div class="group-head" data-reveal>
+            <h3 class="group-head__title">Outros projetos</h3>
+            <span class="group-head__game" lang="en">Side jobs</span>
+            <span class="group-head__count" aria-hidden="true">04</span>
+          </div>
+
+          <div class="side-jobs">
+            <article class="side-job panel" data-reveal data-spotlight>
+              <div class="side-job__head">
+                <h4 class="side-job__title">BrainMaster</h4>
+                <span class="side-job__lang">JavaScript</span>
+              </div>
+              <p class="side-job__desc">Transforma vários PDFs em mapas mentais personalizáveis e exportáveis em PNG ou PDF, com IA opcional e fallback automático para NLP local.</p>
+              <ul class="tags tags--sm" aria-label="Tecnologias"><li>D3.js</li><li>PDF.js</li><li>NLP</li><li>IA</li></ul>
+              <div class="side-job__links">
+                <a class="link-arrow" href="https://brain-master-three.vercel.app" target="_blank" rel="noopener">Demo<span class="sr-only"> do BrainMaster (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+                <a class="link-arrow link-arrow--muted" href="https://github.com/Dev-PedroMarcelino/BrainMaster" target="_blank" rel="noopener">Código<span class="sr-only"> do BrainMaster no GitHub (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article class="side-job panel" data-reveal data-spotlight>
+              <div class="side-job__head">
+                <h4 class="side-job__title">Sistema DISC</h4>
+                <span class="side-job__lang">JavaScript</span>
+              </div>
+              <p class="side-job__desc">Avaliação comportamental DISC com três modos de questionário e laudos de RH gerados pelo Google Gemini, exportados em relatórios PDF.</p>
+              <ul class="tags tags--sm" aria-label="Tecnologias"><li>Gemini API</li><li>PDF</li><li>Mobile-first</li></ul>
+              <div class="side-job__links">
+                <a class="link-arrow" href="https://sistema-disc.vercel.app" target="_blank" rel="noopener">Demo<span class="sr-only"> do Sistema DISC (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+                <a class="link-arrow link-arrow--muted" href="https://github.com/Dev-PedroMarcelino/sistema-DISC" target="_blank" rel="noopener">Código<span class="sr-only"> do Sistema DISC no GitHub (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article class="side-job panel" data-reveal data-spotlight>
+              <div class="side-job__head">
+                <h4 class="side-job__title">WorkSync</h4>
+                <span class="side-job__lang">TypeScript</span>
+              </div>
+              <p class="side-job__desc">Organização de tarefas e colaboração: grupos, quadros, notas e tarefas compartilhadas, com login Google e conexão em tempo real via Firebase.</p>
+              <ul class="tags tags--sm" aria-label="Tecnologias"><li>Firebase</li><li>Auth</li><li>Tempo real</li></ul>
+              <div class="side-job__links">
+                <a class="link-arrow" href="https://worksync-eosin.vercel.app" target="_blank" rel="noopener">Demo<span class="sr-only"> do WorkSync (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+                <a class="link-arrow link-arrow--muted" href="https://github.com/Dev-PedroMarcelino/worksync" target="_blank" rel="noopener">Código<span class="sr-only"> do WorkSync no GitHub (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article class="side-job panel" data-reveal data-spotlight>
+              <div class="side-job__head">
+                <h4 class="side-job__title">AutoFinanças</h4>
+                <span class="side-job__lang">Python</span>
+              </div>
+              <p class="side-job__desc">Automação que gera a planilha mensal de gastos no Excel já formatada, com fórmulas nativas e o planejamento herdado do mês anterior.</p>
+              <ul class="tags tags--sm" aria-label="Tecnologias"><li>Pandas</li><li>OpenPyxl</li><li>Tkinter</li><li>RPA</li></ul>
+              <div class="side-job__links">
+                <a class="link-arrow" href="https://github.com/Dev-PedroMarcelino/Controle-de-gastos-pessoal" target="_blank" rel="noopener">Código<span class="sr-only"> do AutoFinanças no GitHub (abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Gigs -->
+        <div class="journal-group">
+          <div class="group-head" data-reveal>
+            <h3 class="group-head__title">Sites &amp; landing pages</h3>
+            <span class="group-head__game" lang="en">Gigs</span>
+            <span class="group-head__count" aria-hidden="true">04</span>
+          </div>
+
+          <ul class="gigs">
+            <li data-reveal>
+              <a class="gig" href="https://cafeteria-swart-chi.vercel.app" target="_blank" rel="noopener">
+                <span class="gig__index" aria-hidden="true">G-01</span>
+                <span class="gig__name">Café Banana</span>
+                <span class="gig__desc">Site para cafeteria em Leme/SP</span>
+                <span class="gig__tech">TypeScript</span>
+                <span class="gig__arrow" aria-hidden="true">↗</span>
+                <span class="sr-only">(abre em nova aba)</span>
+              </a>
+            </li>
+            <li data-reveal>
+              <a class="gig" href="https://vikings-drab.vercel.app" target="_blank" rel="noopener">
+                <span class="gig__index" aria-hidden="true">G-02</span>
+                <span class="gig__name">Viking's Burguer</span>
+                <span class="gig__desc">Hamburgueria artesanal com delivery em Leme/SP</span>
+                <span class="gig__tech">HTML · CSS · JS</span>
+                <span class="gig__arrow" aria-hidden="true">↗</span>
+                <span class="sr-only">(abre em nova aba)</span>
+              </a>
+            </li>
+            <li data-reveal>
+              <a class="gig" href="https://espetinho-bice.vercel.app" target="_blank" rel="noopener">
+                <span class="gig__index" aria-hidden="true">G-03</span>
+                <span class="gig__name">Espeto Dú Grande</span>
+                <span class="gig__desc">Site para espetaria</span>
+                <span class="gig__tech">HTML · CSS</span>
+                <span class="gig__arrow" aria-hidden="true">↗</span>
+                <span class="sr-only">(abre em nova aba)</span>
+              </a>
+            </li>
+            <li data-reveal>
+              <a class="gig" href="https://protectsistemasdeseguranca.vercel.app" target="_blank" rel="noopener">
+                <span class="gig__index" aria-hidden="true">G-04</span>
+                <span class="gig__name">Protect Sistemas</span>
+                <span class="gig__desc">Landing page para empresa de sistemas de segurança</span>
+                <span class="gig__tech">HTML · CSS · JS</span>
+                <span class="gig__arrow" aria-hidden="true">↗</span>
+                <span class="sr-only">(abre em nova aba)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== 03 TRAJETÓRIA // LIFEPATH -->
+    <section class="section" id="trajetoria" aria-labelledby="trajetoria-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="kicker" data-reveal><span class="kicker__index">03</span>Trajetória<span class="kicker__game" lang="en">Lifepath</span></p>
+          <h2 class="section__title" id="trajetoria-title" data-reveal>Cada etapa, um <span class="accent">upgrade.</span></h2>
+        </header>
+
+        <div class="lifepath">
+          <div>
+            <h3 class="col-title" data-reveal>Experiência</h3>
+            <ol class="timeline">
+              <li class="timeline__item timeline__item--active" data-reveal>
+                <span class="timeline__marker" aria-hidden="true"></span>
+                <div class="timeline__card panel">
+                  <div class="timeline__meta">
+                    <span>Jun 2026 — Presente</span>
+                    <span class="status status--live">Ativo</span>
+                  </div>
+                  <h4 class="timeline__role">Suporte de TI &amp; Desenvolvedor Fullstack</h4>
+                  <p class="timeline__org">Kybernan</p>
+                  <ul class="timeline__list">
+                    <li><strong>Desenvolvimento fullstack &amp; SaaS:</strong> novas funcionalidades, regras de negócio e interfaces focadas na experiência do usuário em sistemas SaaS e corporativos de alta performance.</li>
+                    <li><strong>Infraestrutura &amp; suporte:</strong> suporte em infraestrutura de TI, gerenciamento de servidores VPS (Easypanel) e sincronização contínua de rotinas e serviços críticos.</li>
+                    <li><strong>Marketing &amp; comunicação:</strong> criação de peças visuais e vídeos criativos com IA para campanhas e para o Instagram @kyberfood, com Google Flow (geração), ElevenLabs (voz) e edição manual.</li>
+                  </ul>
+                </div>
+              </li>
+              <li class="timeline__item" data-reveal>
+                <span class="timeline__marker" aria-hidden="true"></span>
+                <div class="timeline__card panel">
+                  <div class="timeline__meta">
+                    <span>Experiência anterior</span>
+                    <span class="status status--done">Concluído</span>
+                  </div>
+                  <h4 class="timeline__role">Consultor de Robótica Educacional</h4>
+                  <p class="timeline__org">Maker Robotics</p>
+                  <ul class="timeline__list">
+                    <li><strong>Algoritmos &amp; programação:</strong> desenvolvimento e depuração de algoritmos estruturados em linguagem C para sistemas embarcados.</li>
+                    <li><strong>Suporte &amp; qualidade:</strong> suporte técnico a hardware e software, testes práticos e validação lógica.</li>
+                    <li><strong>Comunicação técnica:</strong> orientação de estudantes em lógica computacional, com clareza didática e trabalho em equipe.</li>
+                  </ul>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="col-title" data-reveal>Formação <span class="col-title__game" lang="en">Shards</span></h3>
+            <ul class="shards">
+              <li class="shard panel" data-reveal>
+                <span class="status status--live">Em curso</span>
+                <h4 class="shard__title">Bacharelado em Sistemas de Informação</h4>
+                <p class="shard__org">FHO Uniararas</p>
+                <p class="shard__date">Previsão de conclusão: 2028</p>
+              </li>
+              <li class="shard panel" data-reveal>
+                <span class="status status--done">Concluído</span>
+                <h4 class="shard__title">Técnico em Desenvolvimento de Sistemas</h4>
+                <p class="shard__org">ETEC Deputado Salim Sedeh</p>
+                <p class="shard__date">Concluído em 2024</p>
+              </li>
+              <li class="shard panel" data-reveal>
+                <span class="status status--done">Concluído</span>
+                <h4 class="shard__title">Informática Profissional</h4>
+                <p class="shard__date">2018 — 2021</p>
+              </li>
+            </ul>
+
+            <h3 class="col-title col-title--spaced" data-reveal>Idiomas</h3>
+            <ul class="langs" data-reveal>
+              <li class="lang">
+                <span class="lang__name">Português</span>
+                <span class="lang__level">Nativo</span>
+                <span class="lang__meter" aria-hidden="true"><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i></span>
+              </li>
+              <li class="lang">
+                <span class="lang__name">Inglês</span>
+                <span class="lang__level">Intermediário</span>
+                <span class="lang__meter" aria-hidden="true"><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i></i><i></i></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== 04 STACK // CYBERWARE -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="kicker" data-reveal><span class="kicker__index">04</span>Stack<span class="kicker__game" lang="en">Cyberware</span></p>
+          <h2 class="section__title" id="stack-title" data-reveal>Ferramentas para <span class="accent">fazer acontecer.</span></h2>
+          <p class="section__intro" data-reveal>O que uso no dia a dia para construir, integrar e manter sistemas em produção.</p>
+        </header>
+
+        <div class="cyberware">
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
+              <span class="slot__name" lang="en">Operating system</span>
+            </div>
+            <h3 class="slot__title">Linguagens</h3>
+            <ul class="chips"><li>JavaScript</li><li>Java (POO)</li><li>C</li></ul>
+          </article>
+
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"/><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5"/></svg></span>
+              <span class="slot__name" lang="en">Circulatory system</span>
+            </div>
+            <h3 class="slot__title">Bancos de dados</h3>
+            <ul class="chips"><li>SQL</li><li>Supabase</li><li>Firebase</li></ul>
+          </article>
+
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.3 10.9l9.4-4.7M7.3 13.1l9.4 4.7"/></svg></span>
+              <span class="slot__name" lang="en">Nervous system</span>
+            </div>
+            <h3 class="slot__title">Integrações &amp; IA</h3>
+            <ul class="chips"><li>APIs REST</li><li>Google Gemini API</li><li>n8n</li></ul>
+          </article>
+
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3.5" y="4" width="17" height="7"/><rect x="3.5" y="13" width="17" height="7"/><path d="M7 7.5h2M7 16.5h2"/></svg></span>
+              <span class="slot__name" lang="en">Skeleton</span>
+            </div>
+            <h3 class="slot__title">Infra &amp; ferramentas</h3>
+            <ul class="chips"><li>VPS · Easypanel</li><li>Git</li><li>GitHub</li><li>Eclipse IDE</li><li>Claude Code</li></ul>
+          </article>
+
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8z"/><path d="M3.5 12.5l8.5 4.5 8.5-4.5M3.5 16.5l8.5 4.5 8.5-4.5"/></svg></span>
+              <span class="slot__name" lang="en">Frontal cortex</span>
+            </div>
+            <h3 class="slot__title">Arquitetura &amp; práticas</h3>
+            <ul class="chips"><li>Desenvolvimento fullstack</li><li>Arquitetura SaaS</li><li>Software corporativo</li><li>Lógica algorítmica</li><li>Clean Code</li></ul>
+          </article>
+
+          <article class="slot panel" data-reveal data-spotlight>
+            <div class="slot__top">
+              <span class="slot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <span class="slot__name" lang="en">Ocular system</span>
+            </div>
+            <h3 class="slot__title">Criativos &amp; IA generativa</h3>
+            <ul class="chips"><li>Google Flow</li><li>ElevenLabs</li><li>Edição de vídeo</li><li>Peças visuais</li></ul>
+          </article>
+        </div>
+
+        <p class="stack-note" data-reveal>Também presentes nos meus projetos: TypeScript, Next.js, Tailwind, Python, D3.js e PDF.js.</p>
+      </div>
+    </section>
+
+    <!-- ===================================================== 05 CONTATO // MESSAGES -->
+    <section class="section contact" id="contato" aria-labelledby="contato-title">
+      <div class="container contact__grid">
+        <div class="contact__intro">
+          <p class="kicker" data-reveal><span class="kicker__index">05</span>Contato<span class="kicker__game" lang="en">Messages</span></p>
+          <h2 class="contact__title" id="contato-title" data-reveal>Tem um sistema para <span class="accent">colocar em movimento?</span></h2>
+          <p class="section__intro" data-reveal>Vamos conversar sobre como posso somar à sua equipe — no desenvolvimento fullstack ou no suporte de TI, presencial ou home office.</p>
+          <div class="contact__actions" data-reveal>
+            <a class="btn btn--lg" href="mailto:pedromarcelinoh7@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio">Enviar e-mail <span class="btn__icon" aria-hidden="true">→</span></a>
+            <button class="btn btn--ghost" type="button" data-copy="pedromarcelinoh7@gmail.com"><span data-copy-label>Copiar e-mail</span></button>
+          </div>
+          <p class="sr-only" aria-live="polite" data-copy-status></p>
+        </div>
+
+        <ul class="contacts">
+          <li data-reveal>
+            <a class="contact-card panel" href="mailto:pedromarcelinoh7@gmail.com" data-spotlight>
+              <span class="contact-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="5" width="18" height="14"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label">E-mail</span>
+                <span class="contact-card__value">pedromarcelinoh7@gmail.com</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li data-reveal>
+            <a class="contact-card panel" href="https://wa.me/5519971253411" target="_blank" rel="noopener" data-spotlight>
+              <span class="contact-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label">WhatsApp <span aria-hidden="true">// </span><span lang="en">Holocall</span></span>
+                <span class="contact-card__value">(19) 97125-3411</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+              <span class="sr-only">(abre em nova aba)</span>
+            </a>
+          </li>
+          <li data-reveal>
+            <a class="contact-card panel" href="https://www.linkedin.com/in/pedro-henrique-marcelino-/" target="_blank" rel="noopener" data-spotlight>
+              <span class="contact-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M8 10.5V16M8 7.5v.5M11.5 16v-5.5M11.5 13c0-1.5 1-2.5 2.3-2.5S16 11.5 16 13v3"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label">LinkedIn</span>
+                <span class="contact-card__value">/in/pedro-henrique-marcelino-</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+              <span class="sr-only">(abre em nova aba)</span>
+            </a>
+          </li>
+          <li data-reveal>
+            <a class="contact-card panel" href="https://github.com/Dev-PedroMarcelino" target="_blank" rel="noopener" data-spotlight>
+              <span class="contact-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="7" cy="6" r="2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="8" r="2"/><path d="M7 8v8M17 10c0 3.5-4 4-8.5 6.5"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label">GitHub</span>
+                <span class="contact-card__value">@Dev-PedroMarcelino</span>
+              </span>
+              <span class="contact-card__arrow" aria-hidden="true">↗</span>
+              <span class="sr-only">(abre em nova aba)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================== FOOTER -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span data-year>2026</span> Pedro Henrique Marcelino</p>
+      <p class="site-footer__made">Feito à mão com HTML, CSS e JavaScript <span aria-hidden="true">//</span> <span lang="en">never fade away</span></p>
+      <div class="site-footer__actions">
+        <button class="footer-egg" type="button" data-breach-open aria-haspopup="dialog">&gt; breach_protocol</button>
+        <a class="site-footer__top" href="#inicio">Topo <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================== EASTER EGG: BREACH PROTOCOL -->
+  <dialog class="breach" aria-labelledby="breach-title" data-breach>
+    <div class="breach__inner">
+      <div class="breach__head">
+        <div>
+          <p class="breach__eyebrow">Easter egg <span aria-hidden="true">//</span> <span lang="en">netrunner</span></p>
+          <h2 class="breach__title" id="breach-title" lang="en">Breach Protocol</h2>
+        </div>
+        <button class="breach__close" type="button" data-breach-close aria-label="Fechar">✕</button>
+      </div>
+      <p class="breach__help">
+        Monte as sequências escolhendo códigos na matriz. Comece pela <b>linha</b> destacada; a cada escolha, alterne entre <b>coluna</b> e <b>linha</b> a partir do último código.
+      </p>
+
+      <div class="breach__layout">
+        <div>
+          <p class="breach__label">Matriz de código</p>
+          <div class="breach__matrix" role="group" aria-label="Matriz de código" data-breach-matrix></div>
+        </div>
+        <div class="breach__side">
+          <p class="breach__label">Buffer</p>
+          <ol class="breach__buffer" aria-label="Buffer" data-breach-buffer></ol>
+          <p class="breach__label">Sequências</p>
+          <ul class="breach__daemons" data-breach-daemons></ul>
+        </div>
+      </div>
+
+      <div class="breach__result" aria-live="polite" data-breach-result></div>
+
+      <div class="breach__foot">
+        <button class="btn btn--sm btn--ghost" type="button" data-breach-reset>Nova matriz</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/breach-protocol.js" defer></script>
+</body>
+</html>

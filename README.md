@@ -1,0 +1,82 @@
+# Portfólio — Pedro Henrique Marcelino
+
+Site pessoal de **Pedro Henrique Marcelino**, desenvolvedor fullstack júnior e suporte de TI.
+Visual inspirado na interface de *Cyberpunk 2077*, com referências sutis ao jogo, sem perder o tom profissional.
+
+HTML, CSS e JavaScript puros: sem framework, sem build e sem dependências. Basta hospedar os arquivos.
+
+## Estrutura
+
+```
+meu portfolio/
+├── .claude/                        # pré-visualização local no Claude (servidor PowerShell); não precisa publicar
+└── portfolio v2/                   # o site (é esta pasta que vai para a hospedagem)
+    ├── index.html                  # todo o conteúdo do site (seções comentadas)
+    └── assets/
+        ├── css/style.css           # estilos (índice no topo do arquivo; tokens de cor/fonte em :root)
+        ├── js/main.js              # menu mobile, revelação ao rolar, relógio, copiar e-mail
+        ├── js/breach-protocol.js   # easter egg (minigame) — pode ser removido sem afetar o resto
+        ├── img/                    # foto, favicons e imagem de compartilhamento (og-image.jpg)
+        └── docs/                   # currículo em PDF (botão "Baixar currículo")
+```
+
+## Rodar localmente
+
+- **Mais simples:** abra o `index.html` no navegador.
+- **Com servidor local** (como o site vai rodar publicado), a partir da pasta `meu portfolio`:
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -File .claude/serve.ps1 -Root "portfolio v2"
+```
+
+Depois acesse http://localhost:5173.
+
+## Editar o conteúdo
+
+Tudo está no `index.html`, dividido por comentários:
+
+| Seção | Comentário no HTML | O que editar |
+| --- | --- | --- |
+| Topo | `HERO` | nome, cargo, frase de apresentação, botões |
+| Fatos rápidos | `FATOS RÁPIDOS` | empresa atual, formação, cidade, idiomas |
+| Perfil | `01 PERFIL // CHARACTER` | bio e os 5 "atributos" |
+| Projetos | `02 PROJETOS // JOURNAL` | destaques (*main jobs*), criativos com IA (*braindance*), outros projetos (*side jobs*) e sites (*gigs*) |
+| Trajetória | `03 TRAJETÓRIA // LIFEPATH` | experiências, formação e idiomas |
+| Stack | `04 STACK // CYBERWARE` | tecnologias por categoria |
+| Contato | `05 CONTATO // MESSAGES` | e-mail, WhatsApp, LinkedIn e GitHub |
+
+**Novo projeto em destaque:** copie um bloco `<article class="job panel">` e ajuste textos, tags e links.
+O status usa as classes `status--live` (em operação), `status--demo` (demo online) ou `status--academic`.
+
+**Trocar a foto:** substitua `assets/img/pedro-henrique-marcelino.webp`, mantendo o nome (ou atualize o `src` no HTML).
+Se a proporção mudar, ajuste `width`/`height` da `<img>` e a posição do retículo em `.portrait__reticle` no CSS.
+
+**Trocar o currículo:** substitua `assets/docs/curriculo-pedro-henrique-marcelino.pdf` mantendo o nome.
+
+## Publicar
+
+Funciona em qualquer hospedagem estática (Vercel, Netlify, GitHub Pages):
+
+- **Vercel / Netlify:** importe o repositório; não há comando de build e o diretório de saída é a raiz.
+- **GitHub Pages:** *Settings → Pages → Deploy from a branch*, pasta raiz.
+
+Depois de publicar, troque no `<head>` do `index.html` o caminho de `og:image` por uma URL absoluta
+(ex.: `https://seu-dominio.com/assets/img/og-image.jpg`). Sem isso, a prévia do link não aparece no LinkedIn e no WhatsApp.
+
+## Referências ao jogo (easter eggs)
+
+- Seções com nomes do menu do jogo: *Character*, *Journal*, *Lifepath*, *Shards*, *Cyberware*, *Messages*.
+- Projetos organizados como no diário: *Main jobs*, *Side jobs* e *Gigs*, com o losango de missão no status.
+- Os 5 atributos (*Intelligence*, *Technical Ability*, *Reflexes*, *Cool*, *Body*) descrevem as competências.
+- Retrato com "scan" das *Kiroshi Optics* (passe o mouse na foto para escanear de novo).
+- Vídeos com IA na seção *Braindance* (as "gravações" do jogo), com o fluxo em camadas como no editor de BD.
+- Stack organizada por slots de *cyberware* (criativos no *Ocular system*); WhatsApp como *Holocall*; *never fade away* no rodapé.
+- **Breach Protocol jogável:** botão `> breach_protocol` no rodapé, `breach()` no console ou Konami code
+  (↑ ↑ ↓ ↓ ← → ← → B A). A matriz é gerada a partir de um caminho válido, então sempre tem solução.
+
+## Acessibilidade e desempenho
+
+- Navegação por teclado, link "pular para o conteúdo", foco visível e textos alternativos.
+- Respeita `prefers-reduced-motion`: as animações são desligadas para quem prefere menos movimento.
+- Responsivo de 320px a telas largas, testado em 320, 375, 768, 1024, 1080, 1440 e 1920px.
+- Sem bibliotecas externas além das fontes do Google Fonts (Rajdhani, Barlow e JetBrains Mono).
