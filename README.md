@@ -14,7 +14,7 @@ meu portfolio/
     ├── index.html                  # todo o conteúdo do site (seções comentadas)
     └── assets/
         ├── css/style.css           # estilos (índice no topo do arquivo; tokens de cor/fonte em :root)
-        ├── js/main.js              # menu mobile, revelação ao rolar, relógio, copiar e-mail
+        ├── js/main.js              # menu mobile, revelação ao rolar, relógio, copiar e-mail, vídeos e modo braindance
         ├── js/breach-protocol.js   # easter egg (minigame) — pode ser removido sem afetar o resto
         ├── img/                    # foto, favicons e imagem de compartilhamento (og-image.jpg)
         └── docs/                   # currículo em PDF (botão "Baixar currículo")
@@ -53,6 +53,12 @@ Se a proporção mudar, ajuste `width`/`height` da `<img>` e a posição do ret�
 
 **Trocar o currículo:** substitua `assets/docs/curriculo-pedro-henrique-marcelino.pdf` mantendo o nome.
 
+**Vídeos (card *Braindance*):** ficam no **Cloudflare R2** (bucket `videos-portfolio`), não no repositório —
+são grandes demais para o GitHub (limite de 100 MB por arquivo). O fundo do card é o `video cyberpunk portfolio.mp4`
+e o player em destaque é o `video homem vs IA.mp4`. Para trocar um vídeo, envie o novo arquivo ao bucket e atualize
+o `data-src` do `<source>` no `index.html` (espaços no nome viram `%20`). O CORS do bucket precisa liberar `GET`/`HEAD`
+para o domínio do site; sem isso, a onda de áudio do modo braindance não funciona. A pasta `assets/video/` está no `.gitignore`.
+
 ## Publicar
 
 Funciona em qualquer hospedagem estática (Vercel, Netlify, GitHub Pages):
@@ -70,6 +76,7 @@ Depois de publicar, troque no `<head>` do `index.html` o caminho de `og:image` p
 - Os 5 atributos (*Intelligence*, *Technical Ability*, *Reflexes*, *Cool*, *Body*) descrevem as competências.
 - Retrato com "scan" das *Kiroshi Optics* (passe o mouse na foto para escanear de novo).
 - Vídeos com IA na seção *Braindance* (as "gravações" do jogo), com o fluxo em camadas como no editor de BD.
+  O botão **Entrar no braindance** abre o vídeo de fundo em tela cheia, com áudio, camada térmica e linha do tempo.
 - Stack organizada por slots de *cyberware* (criativos no *Ocular system*); WhatsApp como *Holocall*; *never fade away* no rodapé.
 - **Breach Protocol jogável:** botão `> breach_protocol` no rodapé, `breach()` no console ou Konami code
   (↑ ↑ ↓ ↓ ← → ← → B A). A matriz é gerada a partir de um caminho válido, então sempre tem solução.

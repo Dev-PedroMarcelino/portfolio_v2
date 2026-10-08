@@ -386,6 +386,13 @@
           </div>
 
           <article class="job bd panel" data-reveal data-spotlight>
+            <!-- Vídeos hospedados no Cloudflare R2 (bucket videos-portfolio); só carregam quando o card chega perto da tela (main.js).
+                 crossorigin é necessário para a onda de áudio do modo braindance (Web Audio) -->
+            <div class="bd__bg" aria-hidden="true">
+              <video class="bd__video" data-lazy-video crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture>
+                <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/video%20cyberpunk%20portfolio.mp4" type="video/mp4">
+              </video>
+            </div>
             <div class="bd__main">
               <div class="job__top">
                 <span class="job__id">BD 01</span>
@@ -404,6 +411,7 @@
                 <li>Google Flow</li><li>ElevenLabs</li><li>Edição de vídeo</li><li>Reels</li><li>Marketing</li>
               </ul>
               <div class="job__foot">
+                <button class="btn btn--sm btn--ghost bd__dive" type="button" data-dive-open aria-haspopup="dialog"><span class="bd__dive-dot" aria-hidden="true"></span>Entrar no braindance</button>
                 <a class="link-arrow" href="https://www.instagram.com/kyberfood/" target="_blank" rel="noopener">Ver no Instagram<span class="sr-only"> (@kyberfood, abre em nova aba)</span> <span aria-hidden="true">↗</span></a>
               </div>
             </div>
@@ -442,6 +450,25 @@
                 </div>
               </li>
             </ol>
+
+            <figure class="bd-player" data-player>
+              <div class="bd-player__screen">
+                <video class="bd-player__video" data-lazy-video data-player-video crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture aria-label="Vídeo Homem vs IA, produzido com IA">
+                  <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/video%20homem%20vs%20IA.mp4" type="video/mp4">
+                </video>
+                <div class="bd-player__hud" aria-hidden="true">
+                  <span class="bd-player__rec">Rec</span>
+                  <span class="bd-player__time" data-player-time>00:00</span>
+                </div>
+              </div>
+              <div class="bd-player__bar">
+                <figcaption class="bd-player__label"><span lang="en">BD playback</span> · Homem vs IA</figcaption>
+                <div class="bd-player__controls">
+                  <button class="bd-player__btn" type="button" data-player-play>Pausar</button>
+                  <button class="bd-player__btn" type="button" data-player-sound aria-pressed="false">Som</button>
+                </div>
+              </div>
+            </figure>
           </article>
         </div>
 
@@ -826,6 +853,75 @@
       </div>
     </div>
   </dialog>
+
+  <!-- Modo braindance: o vídeo de fundo do card "Criativos com IA" sai do card e vem para cá (main.js) -->
+  <dialog class="bd-dive" aria-labelledby="bd-dive-title" data-dive>
+    <div class="bd-dive__inner">
+      <header class="bd-dive__head">
+        <div>
+          <p class="bd-dive__eyebrow"><span lang="en">Braindance</span> <span aria-hidden="true">//</span> cyberpunk_portfolio.bd</p>
+          <h2 class="bd-dive__title" id="bd-dive-title">Modo imersão</h2>
+        </div>
+        <p class="bd-dive__status" aria-hidden="true">Sincronizado</p>
+        <button class="bd-dive__close" type="button" data-dive-close>Desconectar <kbd>Esc</kbd></button>
+      </header>
+
+      <div class="bd-dive__stage">
+        <aside class="bd-dive__side bd-dive__side--left">
+          <p class="bd-dive__label">Camadas</p>
+          <ul class="bd-dive__legend">
+            <li class="bd-dive__legend-item bd-dive__legend-item--visual"><strong>Visual</strong> cena gerada no Google Flow</li>
+            <li class="bd-dive__legend-item bd-dive__legend-item--audio"><strong>Áudio</strong> trilha e voz</li>
+            <li class="bd-dive__legend-item bd-dive__legend-item--thermal"><strong>Térmico</strong> leitura de calor da cena</li>
+          </ul>
+          <p class="bd-dive__hint">Alterne as camadas e percorra a linha do tempo para analisar a cena, como no editor de braindance.</p>
+        </aside>
+
+        <div class="bd-dive__screen" data-dive-screen>
+          <span class="bd-dive__scan" aria-hidden="true"></span>
+          <span class="bd-dive__sync" aria-hidden="true">Sincronizando<span class="bd-dive__sync-dots">...</span></span>
+        </div>
+
+        <aside class="bd-dive__side bd-dive__side--right">
+          <p class="bd-dive__label">Dados da gravação</p>
+          <dl class="bd-dive__data">
+            <div><dt>Arquivo</dt><dd>cyberpunk_portfolio.bd</dd></div>
+            <div><dt>Resolução</dt><dd data-dive-res>—</dd></div>
+            <div><dt>Duração</dt><dd data-dive-dur>—</dd></div>
+            <div><dt>Visual</dt><dd>Google Flow</dd></div>
+            <div><dt>Voz</dt><dd>ElevenLabs</dd></div>
+            <div><dt>Edição</dt><dd>Manual</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <div class="bd-dive__deck">
+        <button class="bd-dive__btn bd-dive__play" type="button" data-dive-play>Pausar</button>
+        <div class="bd-dive__timeline">
+          <canvas class="bd-dive__wave" data-dive-wave aria-hidden="true"></canvas>
+          <input class="bd-dive__scrub" type="range" min="0" max="1000" step="1" value="0" aria-label="Linha do tempo" data-dive-scrub>
+        </div>
+        <span class="bd-dive__time" data-dive-time>00:00 / 00:00</span>
+        <div class="bd-dive__layers" role="group" aria-label="Camadas">
+          <button class="bd-dive__btn bd-dive__btn--visual" type="button" data-dive-layer="visual" aria-pressed="true">Visual</button>
+          <button class="bd-dive__btn bd-dive__btn--thermal" type="button" data-dive-layer="thermal" aria-pressed="false">Térmico</button>
+          <button class="bd-dive__btn bd-dive__btn--audio" type="button" data-dive-audio aria-pressed="true">Áudio</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- filtro da camada térmica: tons de cinza mapeados para um gradiente de calor -->
+  <svg class="sr-only" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="bd-thermal" color-interpolation-filters="sRGB">
+      <feColorMatrix type="saturate" values="0" />
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.04 0.25 0.8 1 1 1" />
+        <feFuncG type="table" tableValues="0.02 0 0.08 0.45 0.85 1" />
+        <feFuncB type="table" tableValues="0.22 0.55 0.4 0.05 0.1 0.8" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
 
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/breach-protocol.js" defer></script>

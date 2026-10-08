@@ -205,6 +205,268 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  /* ------------------------- Vídeos do card Braindance (fundo + player, lazy) */
+  // só baixam quando o card chega perto da tela e pausam quando ele sai
+  const lazyVideos = document.querySelectorAll('[data-lazy-video]');
+  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+  const canAutoplay = () => !reduceMotion.matches && !saveData;
+  const wantsPlay = new Map();
+  const onScreen = new Map();
+
+  const loadVideo = (video) => {
+    if (video.dataset.loaded) return;
+    video.querySelectorAll('source[data-src]').forEach((source) => {
+      source.src = source.dataset.src;
+    });
+    video.load();
+    video.dataset.loaded = 'true';
+  };
+
+  const playVideo = (video) => {
+    loadVideo(video);
+    video.play().then(() => video.classList.add('is-ready')).catch(() => {});
+  };
+
+  lazyVideos.forEach((video) => wantsPlay.set(video, canAutoplay()));
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (video.dataset.diving) return; // está no modo braindance, fora do card
+        onScreen.set(video, entry.isIntersecting);
+        if (entry.isIntersecting && wantsPlay.get(video)) playVideo(video);
+        else if (!entry.isIntersecting) video.pause();
+      });
+    }, { rootMargin: '200px 0px' });
+    lazyVideos.forEach((video) => videoObserver.observe(video));
+  }
+
+  // controles do player: pausar/tocar e som
+  const playerVideo = document.querySelector('[data-player-video]');
+  const playerPlay = document.querySelector('[data-player-play]');
+  const playerSound = document.querySelector('[data-player-sound]');
+  const playerTime = document.querySelector('[data-player-time]');
+
+  const syncPlayerPlay = () => {
+    if (playerPlay) playerPlay.textContent = wantsPlay.get(playerVideo) ? 'Pausar' : 'Tocar';
+  };
+
+  if (playerVideo) {
+    syncPlayerPlay();
+
+    playerPlay?.addEventListener('click', () => {
+      const play = !wantsPlay.get(playerVideo);
+      wantsPlay.set(playerVideo, play);
+      if (play) playVideo(playerVideo);
+      else playerVideo.pause();
+      syncPlayerPlay();
+    });
+
+    playerSound?.addEventListener('click', () => {
+      playerVideo.muted = !playerVideo.muted;
+      playerSound.setAttribute('aria-pressed', String(!playerVideo.muted));
+      if (!playerVideo.muted && !wantsPlay.get(playerVideo)) {
+        wantsPlay.set(playerVideo, true);
+        playVideo(playerVideo);
+        syncPlayerPlay();
+      }
+    });
+
+    playerVideo.addEventListener('timeupdate', () => {
+      if (!playerTime) return;
+      const seconds = Math.floor(playerVideo.currentTime);
+      playerTime.textContent = `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+    });
+  }
+
+  // retoma (ou pausa) os vídeos do card conforme a preferência e a posição na tela
+  const resumeCardVideos = () => {
+    lazyVideos.forEach((video) => {
+      if (video.dataset.diving) return;
+      if (wantsPlay.get(video) && onScreen.get(video)) playVideo(video);
+      else video.pause();
+    });
+  };
+
+  reduceMotion.addEventListener('change', () => {
+    lazyVideos.forEach((video) => wantsPlay.set(video, canAutoplay()));
+    resumeCardVideos();
+    syncPlayerPlay();
+  });
+
+  /* ------------- Modo braindance: o vídeo de fundo sai do card, com áudio */
+  const dive = document.querySelector('[data-dive]');
+  const diveVideo = document.querySelector('.bd__video');
+
+  if (dive && diveVideo) {
+    const home = diveVideo.parentElement;
+    const screen = dive.querySelector('[data-dive-screen]');
+    const playButton = dive.querySelector('[data-dive-play]');
+    const audioButton = dive.querySelector('[data-dive-audio]');
+    const layerButtons = dive.querySelectorAll('[data-dive-layer]');
+    const scrub = dive.querySelector('[data-dive-scrub]');
+    const timeEl = dive.querySelector('[data-dive-time]');
+    const resEl = dive.querySelector('[data-dive-res]');
+    const durEl = dive.querySelector('[data-dive-dur]');
+    const wave = dive.querySelector('[data-dive-wave]');
+    const waveCtx = wave.getContext('2d');
+    let audio = null; // { ctx, analyser, data } — ou false se o navegador não suportar
+    let frame = 0;
+    let scrubbing = false;
+
+    const clock = (seconds) => {
+      const s = Math.max(0, Math.floor(seconds || 0));
+      return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+    };
+
+    const syncMeta = () => {
+      if (diveVideo.videoWidth) {
+        screen.style.aspectRatio = `${diveVideo.videoWidth} / ${diveVideo.videoHeight}`;
+        resEl.textContent = `${diveVideo.videoWidth}×${diveVideo.videoHeight}`;
+      }
+      if (diveVideo.duration) durEl.textContent = clock(diveVideo.duration);
+    };
+
+    const syncTime = () => {
+      const duration = diveVideo.duration || 0;
+      timeEl.textContent = `${clock(diveVideo.currentTime)} / ${clock(duration)}`;
+      if (!scrubbing && duration) scrub.value = String(Math.round((diveVideo.currentTime / duration) * 1000));
+      scrub.style.setProperty('--progress', `${scrub.value / 10}%`);
+    };
+
+    const syncPlay = () => {
+      playButton.textContent = diveVideo.paused ? 'Tocar' : 'Pausar';
+    };
+
+    const setLayer = (layer) => {
+      layerButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.diveLayer === layer)));
+      screen.classList.toggle('is-thermal', layer === 'thermal');
+    };
+
+    const setMuted = (muted) => {
+      diveVideo.muted = muted;
+      audioButton.setAttribute('aria-pressed', String(!muted));
+    };
+
+    // o analisador de áudio alimenta a "onda" da linha do tempo
+    const setupAudio = () => {
+      if (audio !== null) return;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      try {
+        const ctx = new AudioCtx();
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 128;
+        ctx.createMediaElementSource(diveVideo).connect(analyser);
+        analyser.connect(ctx.destination);
+        audio = { ctx, analyser, data: new Uint8Array(analyser.frequencyBinCount) };
+      } catch {
+        audio = false;
+      }
+    };
+
+    const drawWave = () => {
+      const ratio = window.devicePixelRatio || 1;
+      const width = Math.round(wave.clientWidth * ratio);
+      const height = Math.round(wave.clientHeight * ratio);
+      if (wave.width !== width || wave.height !== height) {
+        wave.width = width;
+        wave.height = height;
+      }
+
+      const live = audio && !diveVideo.paused && !diveVideo.muted;
+      if (live) audio.analyser.getByteFrequencyData(audio.data);
+
+      const bars = Math.max(24, Math.min(72, Math.floor(wave.clientWidth / 9)));
+      const step = width / bars;
+      const played = (Number(scrub.value) / 1000) * bars;
+      waveCtx.clearRect(0, 0, width, height);
+      for (let i = 0; i < bars; i += 1) {
+        const level = live ? audio.data[Math.floor((i / bars) * audio.data.length * 0.75)] / 255 : 0.06;
+        const barHeight = Math.max(ratio * 2, level * height);
+        waveCtx.fillStyle = i < played ? 'rgba(0, 240, 255, 0.8)' : 'rgba(0, 240, 255, 0.28)';
+        waveCtx.fillRect(i * step + ratio, height - barHeight, Math.max(ratio, step - ratio * 3), barHeight);
+      }
+
+      if (dive.open && !reduceMotion.matches) frame = requestAnimationFrame(drawWave);
+    };
+
+    const openDive = () => {
+      setupAudio();
+      if (audio) audio.ctx.resume();
+
+      // pausa o player do card e traz o vídeo de fundo para a tela do braindance
+      lazyVideos.forEach((video) => { if (video !== diveVideo) video.pause(); });
+      diveVideo.dataset.diving = 'true';
+      screen.prepend(diveVideo);
+      setMuted(false);
+      setLayer('visual');
+      playVideo(diveVideo);
+
+      if (typeof dive.showModal === 'function') dive.showModal();
+      else dive.setAttribute('open', '');
+
+      syncMeta();
+      syncTime();
+      syncPlay();
+      cancelAnimationFrame(frame);
+      drawWave();
+    };
+
+    // devolve o vídeo ao card, mudo e na camada normal, de onde parou
+    const onDiveClosed = () => {
+      cancelAnimationFrame(frame);
+      setMuted(true);
+      setLayer('visual');
+      home.prepend(diveVideo);
+      delete diveVideo.dataset.diving;
+      if (audio) audio.ctx.suspend();
+      resumeCardVideos();
+    };
+
+    const closeDive = () => {
+      if (typeof dive.close === 'function') dive.close();
+      else {
+        dive.removeAttribute('open');
+        onDiveClosed();
+      }
+    };
+
+    dive.addEventListener('close', onDiveClosed);
+    dive.querySelector('[data-dive-close]')?.addEventListener('click', closeDive);
+    document.querySelectorAll('[data-dive-open]').forEach((button) => button.addEventListener('click', openDive));
+
+    playButton.addEventListener('click', () => {
+      if (diveVideo.paused) playVideo(diveVideo);
+      else diveVideo.pause();
+    });
+
+    audioButton.addEventListener('click', () => {
+      setMuted(!diveVideo.muted);
+      if (audio) audio.ctx.resume();
+    });
+
+    layerButtons.forEach((button) => {
+      button.addEventListener('click', () => setLayer(button.dataset.diveLayer));
+    });
+
+    scrub.addEventListener('input', () => {
+      scrubbing = true;
+      if (diveVideo.duration) diveVideo.currentTime = (Number(scrub.value) / 1000) * diveVideo.duration;
+      syncTime();
+    });
+    scrub.addEventListener('change', () => { scrubbing = false; });
+
+    diveVideo.addEventListener('loadedmetadata', syncMeta);
+    diveVideo.addEventListener('timeupdate', () => {
+      if (!diveVideo.dataset.diving) return;
+      syncTime();
+      if (reduceMotion.matches) drawWave(); // sem animação contínua: atualiza junto com o tempo
+    });
+    diveVideo.addEventListener('play', syncPlay);
+    diveVideo.addEventListener('pause', syncPlay);
+  }
+
   /* ----------------------------------------- Spotlight nos cards (desktop) */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.querySelectorAll('[data-spotlight]').forEach((card) => {
