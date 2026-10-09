@@ -16,6 +16,8 @@ meu portfolio/
         ├── css/style.css           # estilos (índice no topo do arquivo; tokens de cor/fonte em :root)
         ├── js/main.js              # menu mobile, revelação ao rolar, relógio, copiar e-mail, vídeos e modo braindance
         ├── js/breach-protocol.js   # easter egg (minigame) — pode ser removido sem afetar o resto
+        ├── fonts/                  # Barlow, JetBrains Mono e Rajdhani (woff2, licença OFL); cache de 1 ano
+        │                           #   via vercel.json — ao trocar uma fonte, use um nome de arquivo novo
         ├── img/                    # foto, favicons e imagem de compartilhamento (og-image.jpg)
         └── docs/                   # currículo em PDF (botão "Baixar currículo")
 ```
