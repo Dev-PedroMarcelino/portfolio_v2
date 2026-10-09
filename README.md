@@ -20,7 +20,7 @@ meu portfolio/
         ├── fonts/                  # Barlow, JetBrains Mono e Rajdhani (woff2, licença OFL); cache de 1 ano
         │                           #   via vercel.json — ao trocar uma fonte, use um nome de arquivo novo
         ├── img/                    # foto, favicons e imagem de compartilhamento (og-image.jpg)
-        └── docs/                   # currículo em PDF (botão "Baixar currículo")
+        └── docs/                   # currículos em PDF (PT e EN) + fonte/ com o HTML que gera o PDF em inglês
 ```
 
 ## Rodar localmente
@@ -54,7 +54,15 @@ O status usa as classes `status--live` (em operação), `status--demo` (demo onl
 **Trocar a foto:** substitua `assets/img/pedro-henrique-marcelino.webp`, mantendo o nome (ou atualize o `src` no HTML).
 Se a proporção mudar, ajuste `width`/`height` da `<img>` e a posição do retículo em `.portrait__reticle` no CSS.
 
-**Trocar o currículo:** substitua `assets/docs/curriculo-pedro-henrique-marcelino.pdf` mantendo o nome.
+**Atualizar o currículo:** os dois PDFs de `assets/docs/` (português e inglês, este baixado quando o site está em inglês)
+são gerados a partir dos HTMLs de `assets/docs/fonte/` (`curriculo-…html` e `resume-…html`, com o estilo em `curriculo.css`).
+Edite o texto nos dois idiomas e rode, na pasta `portfolio v2`:
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -File "assets/docs/fonte/gerar-pdfs.ps1"
+```
+
+O script usa o Microsoft Edge em modo headless (não precisa instalar nada) e mantém os links clicáveis.
 
 **Vídeos (card *Braindance*):** ficam no **Cloudflare R2** (bucket `videos-portfolio`), não no repositório.
 São versões recodificadas para web: `homem-vs-ia-720p.mp4` (player), `cyberpunk-fundo.mp4` (fundo do card, 480p sem áudio)

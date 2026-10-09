@@ -35,7 +35,10 @@
     '<span class="nav__index">02</span>Projetos': '<span class="nav__index">02</span>Projects',
     '<span class="nav__index">03</span>Trajetória': '<span class="nav__index">03</span>Career',
     '<span class="nav__index">05</span>Contato': '<span class="nav__index">05</span>Contact',
-    'Currículo <span class="btn__icon" aria-hidden="true">↓</span>': 'Résumé (PT) <span class="btn__icon" aria-hidden="true">↓</span>',
+    'Currículo <span class="btn__icon" aria-hidden="true">↓</span>': 'Résumé <span class="btn__icon" aria-hidden="true">↓</span>',
+    // os botões de currículo baixam a versão em inglês (fonte em assets/docs/fonte/)
+    'assets/docs/curriculo-pedro-henrique-marcelino.pdf': 'assets/docs/resume-pedro-henrique-marcelino.pdf',
+    'Curriculo-Pedro-Henrique-Marcelino.pdf': 'Resume-Pedro-Henrique-Marcelino.pdf',
     'E-mail': 'Email',
 
     /* ---------------------------------------------------------------- Hero */
@@ -43,7 +46,7 @@
     'Construo <strong>sistemas SaaS e corporativos</strong> que conectam APIs, bancos de dados e a operação real das empresas — e mantenho a infraestrutura rodando quando ela mais importa.':
       'I build <strong>SaaS and enterprise systems</strong> that connect APIs, databases and the real-world operations of companies — and I keep the infrastructure running when it matters most.',
     'Ver projetos <span class="btn__icon" aria-hidden="true">→</span>': 'View projects <span class="btn__icon" aria-hidden="true">→</span>',
-    'Baixar currículo <span class="btn__icon" aria-hidden="true">↓</span>': 'Download résumé (PT) <span class="btn__icon" aria-hidden="true">↓</span>',
+    'Baixar currículo <span class="btn__icon" aria-hidden="true">↓</span>': 'Download résumé <span class="btn__icon" aria-hidden="true">↓</span>',
     'Pedro Henrique Marcelino, de suéter preto e corrente prateada, em retrato sobre fundo escuro':
       'Pedro Henrique Marcelino in a black sweater and silver chain, portrait on a dark background',
     'Alvo identificado': 'Target identified',
@@ -420,15 +423,16 @@
       owned.add(el);
     });
 
-    // atributos fixos valem mesmo em elementos cujo conteúdo é do JS (ex.: a matriz do breach)
-    document.querySelectorAll('[aria-label], [alt], [title], a[href^="mailto:"]').forEach((el) => {
+    // atributos fixos valem mesmo em elementos cujo conteúdo é do JS (ex.: a matriz do breach);
+    // href/download só mudam quando estão no dicionário (assunto do e-mail, currículo em inglês)
+    document.querySelectorAll('[aria-label], [alt], [title], a[href]').forEach((el) => {
       if (el.parentElement?.closest(SKIP) || insideOwned(el)) return;
-      ['aria-label', 'alt', 'title', 'href'].forEach((attr) => {
+      ['aria-label', 'alt', 'title', 'href', 'download'].forEach((attr) => {
         const value = el.getAttribute(attr);
-        if (!value || (attr === 'href' && !value.startsWith('mailto:'))) return;
+        if (!value) return;
         const en = dict.get(norm(value));
         if (en !== undefined) entries.push({ el, attr, pt: value, en });
-        else if (attr !== 'href' && LOOKS_PT.test(value)) missing.push(`[${attr}] ${value}`);
+        else if (attr !== 'href' && attr !== 'download' && LOOKS_PT.test(value)) missing.push(`[${attr}] ${value}`);
       });
     });
 
