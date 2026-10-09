@@ -224,10 +224,58 @@
 
   const playVideo = (video) => {
     loadVideo(video);
-    video.play().then(() => video.classList.add('is-ready')).catch(() => {});
+    video.play().catch(() => {});
+  };
+
+  // troca a fonte (versão leve do fundo <-> 720p com áudio) continuando do mesmo ponto
+  const setSource = (video, url) => {
+    const source = video.querySelector('source');
+    if (!source || !url || source.src === url) return;
+    const time = video.currentTime;
+    source.src = url;
+    video.dataset.loaded = 'true';
+    video.load();
+    if (time) video.addEventListener('loadedmetadata', () => { video.currentTime = time; }, { once: true });
   };
 
   lazyVideos.forEach((video) => wantsPlay.set(video, canAutoplay()));
+
+  // os vídeos são pesados e dividem a conexão: o fundo só começa a baixar
+  // depois que o player em destaque já tem buffer para tocar sem travar
+  const bgVideo = document.querySelector('.bd__video');
+  const playerVideo = document.querySelector('[data-player-video]');
+  let bgUnlocked = !playerVideo;
+  const isGated = (video) => video === bgVideo && !bgUnlocked;
+  const canStart = (video) => wantsPlay.get(video) && onScreen.get(video) && !isGated(video);
+
+  const unlockBg = () => {
+    if (bgUnlocked) return;
+    bgUnlocked = true;
+    if (bgVideo && !bgVideo.dataset.diving && canStart(bgVideo)) playVideo(bgVideo);
+  };
+
+  // libera quando o player tem ~20 s de folga (ou já baixou tudo); em conexão lenta o fundo espera
+  const checkPlayerBuffer = () => {
+    const { buffered, currentTime, duration } = playerVideo;
+    if (!buffered.length || !duration) return;
+    const end = buffered.end(buffered.length - 1);
+    if (end - currentTime >= 20 || end >= duration - 1) unlockBg();
+  };
+
+  if (playerVideo) {
+    playerVideo.addEventListener('progress', checkPlayerBuffer);
+    playerVideo.addEventListener('timeupdate', checkPlayerBuffer);
+    playerVideo.querySelector('source')?.addEventListener('error', unlockBg, { once: true });
+  }
+
+  // "carregando sinal" na tela quando a conexão não acompanha o vídeo
+  lazyVideos.forEach((video) => {
+    const stopBuffering = () => video.parentElement.classList.remove('is-buffering');
+    video.addEventListener('waiting', () => video.parentElement.classList.add('is-buffering'));
+    ['playing', 'pause', 'emptied'].forEach((type) => video.addEventListener(type, stopBuffering));
+    // se o arquivo falhar, fica o poster, sem o aviso preso na tela
+    video.querySelector('source')?.addEventListener('error', stopBuffering);
+  });
 
   if ('IntersectionObserver' in window) {
     const videoObserver = new IntersectionObserver((entries) => {
@@ -235,15 +283,14 @@
         const video = entry.target;
         if (video.dataset.diving) return; // está no modo braindance, fora do card
         onScreen.set(video, entry.isIntersecting);
-        if (entry.isIntersecting && wantsPlay.get(video)) playVideo(video);
-        else if (!entry.isIntersecting) video.pause();
+        if (!entry.isIntersecting) video.pause();
+        else if (canStart(video)) playVideo(video);
       });
     }, { rootMargin: '200px 0px' });
     lazyVideos.forEach((video) => videoObserver.observe(video));
   }
 
   // controles do player: pausar/tocar e som
-  const playerVideo = document.querySelector('[data-player-video]');
   const playerPlay = document.querySelector('[data-player-play]');
   const playerSound = document.querySelector('[data-player-sound]');
   const playerTime = document.querySelector('[data-player-time]');
@@ -259,7 +306,10 @@
       const play = !wantsPlay.get(playerVideo);
       wantsPlay.set(playerVideo, play);
       if (play) playVideo(playerVideo);
-      else playerVideo.pause();
+      else {
+        playerVideo.pause();
+        unlockBg(); // com o player parado, a conexão fica livre para o fundo
+      }
       syncPlayerPlay();
     });
 
@@ -284,7 +334,7 @@
   const resumeCardVideos = () => {
     lazyVideos.forEach((video) => {
       if (video.dataset.diving) return;
-      if (wantsPlay.get(video) && onScreen.get(video)) playVideo(video);
+      if (canStart(video)) playVideo(video);
       else video.pause();
     });
   };
@@ -395,10 +445,13 @@
       setupAudio();
       if (audio) audio.ctx.resume();
 
-      // pausa o player do card e traz o vídeo de fundo para a tela do braindance
+      // pausa o player do card e traz o vídeo de fundo para a tela do braindance, já na versão 720p com áudio
       lazyVideos.forEach((video) => { if (video !== diveVideo) video.pause(); });
+      bgUnlocked = true;
       diveVideo.dataset.diving = 'true';
+      diveVideo.parentElement.classList.remove('is-buffering');
       screen.prepend(diveVideo);
+      setSource(diveVideo, diveVideo.dataset.srcHd);
       setMuted(false);
       setLayer('visual');
       playVideo(diveVideo);
@@ -413,12 +466,14 @@
       drawWave();
     };
 
-    // devolve o vídeo ao card, mudo e na camada normal, de onde parou
+    // devolve o vídeo ao card, mudo, na camada normal e na versão leve, de onde parou
     const onDiveClosed = () => {
       cancelAnimationFrame(frame);
       setMuted(true);
       setLayer('visual');
+      screen.classList.remove('is-buffering');
       home.prepend(diveVideo);
+      setSource(diveVideo, diveVideo.querySelector('source')?.dataset.src);
       delete diveVideo.dataset.diving;
       if (audio) audio.ctx.suspend();
       resumeCardVideos();

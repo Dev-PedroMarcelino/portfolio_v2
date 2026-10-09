@@ -1523,16 +1523,11 @@ html:not(.js) .nav-toggle {
   pointer-events: none;
 }
 
+/* o poster (primeiro quadro) aparece de cara; o vídeo assume quando começa a tocar */
 .bd__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  filter: saturate(0.85) contrast(1.05);
-  transition: opacity 1.2s var(--ease-out);
-}
-
-.bd__video.is-ready {
   opacity: 0.22;
 }
 
@@ -1612,12 +1607,6 @@ html:not(.js) .nav-toggle {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.8s var(--ease-out);
-}
-
-.bd-player__video.is-ready {
-  opacity: 1;
 }
 
 .bd-player__hud {
@@ -1714,23 +1703,65 @@ html:not(.js) .nav-toggle {
   background: currentColor;
 }
 
-/* layout desktop: texto à esquerda; etapas e o player (resultado final) empilhados à direita */
+/* aviso de "carregando sinal" quando a conexão não acompanha o vídeo (classe via main.js) */
+.bd-signal {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  background: rgba(0, 0, 0, 0.75);
+  font: 600 0.62rem/1 var(--f-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.bd-signal::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  background: currentColor;
+  transform: rotate(45deg);
+  animation: pulse 0.8s steps(2, jump-none) infinite;
+}
+
+.is-buffering > .bd-signal {
+  opacity: 1;
+}
+
+/* layout desktop: texto + player em destaque lado a lado; embaixo, as etapas
+   na horizontal como as trilhas da linha do tempo do editor de braindance */
 @media (min-width: 1000px) {
   .job.bd {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-    gap: 1.5rem clamp(2rem, 4vw, 3.5rem);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      "main player"
+      "steps steps";
+    align-items: center;
+    gap: clamp(1.75rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3.5rem);
   }
 
   .bd__main {
-    grid-row: 1 / span 2;
-    align-self: stretch;
+    grid-area: main;
   }
 
-  .bd-steps,
   .bd-player {
-    grid-column: 2;
+    grid-area: player;
+  }
+
+  .bd-steps {
+    grid-area: steps;
   }
 }
 
@@ -1800,6 +1831,35 @@ html:not(.js) .nav-toggle {
   font-size: 0.92rem;
   line-height: 1.45;
   color: var(--c-text-soft);
+}
+
+/* desktop: etapas lado a lado (2×2 em telas médias, 4 colunas nas largas),
+   cada uma com a "trilha" colorida da sua camada no topo */
+@media (min-width: 1000px) {
+  .bd-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0;
+  }
+
+  .bd-step,
+  .bd-step + .bd-step {
+    padding: 1.1rem 1.1rem 1.2rem;
+    border-top: 2px solid var(--layer);
+  }
+
+  .bd-step:nth-child(even) {
+    border-left: 1px dashed var(--c-line-strong);
+  }
+}
+
+@media (min-width: 1200px) {
+  .bd-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .bd-step + .bd-step {
+    border-left: 1px dashed var(--c-line-strong);
+  }
 }
 
 /* --- Side jobs --- */
@@ -2891,20 +2951,28 @@ html:not(.js) .nav-toggle {
   filter: url(#bd-thermal) contrast(1.15);
 }
 
+/* camada do tamanho da tela que desce com transform (sem relayout a cada quadro sobre o vídeo);
+   a linha é o ::before, no topo dela */
 .bd-dive__scan {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
+  inset: 0;
   z-index: 2;
-  height: 2px;
-  background: rgba(0, 240, 255, 0.45);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
   animation: bd-scan 4.5s linear infinite;
   pointer-events: none;
 }
 
-.bd-dive__screen.is-thermal .bd-dive__scan {
+.bd-dive__scan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+}
+
+.bd-dive__screen.is-thermal .bd-dive__scan::before {
   background: rgba(255, 0, 60, 0.5);
   box-shadow: 0 0 12px rgba(255, 0, 60, 0.6);
 }
@@ -3270,8 +3338,8 @@ html:not(.js) .nav-toggle {
 }
 
 @keyframes bd-scan {
-  from { top: 0; }
-  to { top: 100%; }
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
 }
 
 @keyframes bd-sync {

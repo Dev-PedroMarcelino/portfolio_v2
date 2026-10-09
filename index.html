@@ -386,11 +386,13 @@
           </div>
 
           <article class="job bd panel" data-reveal data-spotlight>
-            <!-- Vídeos hospedados no Cloudflare R2 (bucket videos-portfolio); só carregam quando o card chega perto da tela (main.js).
+            <!-- Vídeos hospedados no Cloudflare R2 (bucket videos-portfolio), recodificados para web (H.264 ~2 Mbps, faststart);
+                 só carregam quando o card chega perto da tela (main.js). O fundo usa uma versão leve sem áudio (480p, ~0,5 Mbps)
+                 e a 720p com áudio (data-src-hd) só é baixada ao entrar no modo braindance.
                  crossorigin é necessário para a onda de áudio do modo braindance (Web Audio) -->
             <div class="bd__bg" aria-hidden="true">
-              <video class="bd__video" data-lazy-video crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture>
-                <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/video%20cyberpunk%20portfolio.mp4" type="video/mp4">
+              <video class="bd__video" data-lazy-video data-src-hd="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/cyberpunk-720p.mp4" poster="assets/img/cyberpunk-poster.webp" crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture>
+                <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/cyberpunk-fundo.mp4" type="video/mp4">
               </video>
             </div>
             <div class="bd__main">
@@ -453,9 +455,10 @@
 
             <figure class="bd-player" data-player>
               <div class="bd-player__screen">
-                <video class="bd-player__video" data-lazy-video data-player-video crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture aria-label="Vídeo Homem vs IA, produzido com IA">
-                  <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/video%20homem%20vs%20IA.mp4" type="video/mp4">
+                <video class="bd-player__video" data-lazy-video data-player-video poster="assets/img/homem-vs-ia-poster.webp" crossorigin="anonymous" muted loop playsinline preload="none" disablepictureinpicture aria-label="Vídeo Homem vs IA, produzido com IA">
+                  <source data-src="https://pub-c92ea1aedd704464b29c8605dbc7424a.r2.dev/homem-vs-ia-720p.mp4" type="video/mp4">
                 </video>
+                <span class="bd-signal" aria-hidden="true">Carregando sinal</span>
                 <div class="bd-player__hud" aria-hidden="true">
                   <span class="bd-player__rec">Rec</span>
                   <span class="bd-player__time" data-player-time>00:00</span>
@@ -879,6 +882,7 @@
 
         <div class="bd-dive__screen" data-dive-screen>
           <span class="bd-dive__scan" aria-hidden="true"></span>
+          <span class="bd-signal" aria-hidden="true">Carregando sinal</span>
           <span class="bd-dive__sync" aria-hidden="true">Sincronizando<span class="bd-dive__sync-dots">...</span></span>
         </div>
 
