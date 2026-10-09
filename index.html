@@ -40,7 +40,28 @@
   <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <script>document.documentElement.classList.add('js');</script>
+  <!-- idioma decidido antes da 1ª pintura: ?lang= > escolha salva > idioma do navegador (pt* → PT, resto → EN).
+       Em inglês a página espera o i18n.js traduzir, para não aparecer em português nem por um instante -->
+  <script>
+    (function (root) {
+      root.classList.add('js');
+      var lang = null;
+      try { lang = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+      if (lang !== 'pt' && lang !== 'en') { try { lang = localStorage.getItem('lang'); } catch (e) { lang = null; } }
+      if (lang !== 'pt' && lang !== 'en') {
+        var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'pt'];
+        lang = 'en';
+        for (var i = 0; i < list.length; i++) {
+          var code = String(list[i]).toLowerCase();
+          if (code.indexOf('pt') === 0) { lang = 'pt'; break; }
+          if (code.indexOf('en') === 0) break;
+        }
+        root.setAttribute('data-lang-auto', '');
+      }
+      root.setAttribute('data-lang', lang);
+      if (lang === 'en') { root.lang = 'en'; root.classList.add('i18n-pending'); }
+    })(document.documentElement);
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,7 +93,17 @@
     <div class="container statusbar__inner">
       <p class="statusbar__item statusbar__item--live"><span class="pulse" aria-hidden="true"></span>Online</p>
       <p class="statusbar__item statusbar__item--wide">Disponível para presencial e home office</p>
-      <p class="statusbar__item"><span class="statusbar__item--wide">Leme — SP ·&nbsp;</span><time data-clock>--:--</time>&nbsp;<span class="statusbar__muted">BRT</span></p>
+      <div class="statusbar__end">
+        <p class="statusbar__item"><span class="statusbar__item--wide">Leme — SP ·&nbsp;</span><time data-clock>--:--</time>&nbsp;<span class="statusbar__muted">BRT</span></p>
+        <!-- tradutor Kiroshi: troca PT/EN (assets/js/i18n.js) -->
+        <div class="lang-switch" role="group" aria-label="Idioma · Language" data-lang-switch>
+          <span class="lang-switch__optic" aria-hidden="true"></span>
+          <span class="lang-switch__track">
+            <button class="lang-switch__opt" type="button" lang="pt-BR" aria-label="Português" aria-pressed="true" data-lang-set="pt">PT</button>
+            <button class="lang-switch__opt" type="button" lang="en" aria-label="English" aria-pressed="false" data-lang-set="en">EN</button>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -939,6 +970,7 @@
     </filter>
   </svg>
 
+  <script src="assets/js/i18n.js" defer></script>
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/breach-protocol.js" defer></script>
 

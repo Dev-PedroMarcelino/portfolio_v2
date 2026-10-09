@@ -9,6 +9,8 @@
   'use strict';
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // textos gerados aqui passam pelo tradutor (i18n.js); sem ele, ficam em português
+  const t = (text, vars) => (window.i18n ? window.i18n.t(text, vars) : text);
 
   /* ------------------------------------------------------------ Menu mobile */
   const header = document.querySelector('[data-header]');
@@ -23,12 +25,16 @@
     if (!header || !toggle) return;
     header.classList.toggle('is-menu-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    if (toggleLabel) toggleLabel.textContent = open ? 'Fechar' : 'Menu';
+    if (toggleLabel) toggleLabel.textContent = open ? t('Fechar') : t('Menu');
     document.body.classList.toggle('no-scroll', open);
     behindMenu.forEach((el) => { if (el) el.inert = open; });
   };
 
   toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+
+  document.addEventListener('langchange', () => {
+    if (toggleLabel) toggleLabel.textContent = toggle?.getAttribute('aria-expanded') === 'true' ? t('Fechar') : t('Menu');
+  });
 
   nav?.addEventListener('click', (event) => {
     if (event.target.closest('a')) setMenu(false);
@@ -86,6 +92,7 @@
     const duration = Math.min(1100, 320 + finalText.length * 28);
     const start = performance.now();
 
+    // o texto final é relido de data-final: se o idioma mudar no meio, termina no idioma novo
     const frame = (now) => {
       const progress = Math.min(1, (now - start) / duration);
       const revealed = Math.floor(progress * finalText.length);
@@ -96,12 +103,12 @@
       }
       el.textContent = output;
       if (progress < 1) requestAnimationFrame(frame);
-      else el.textContent = finalText;
+      else el.textContent = el.dataset.final;
     };
 
     requestAnimationFrame(frame);
     // garantia: se o rAF pausar (aba em segundo plano), o texto final não fica embaralhado
-    window.setTimeout(() => { el.textContent = finalText; }, duration + 200);
+    window.setTimeout(() => { el.textContent = el.dataset.final; }, duration + 200);
   };
 
   /* ---------------------------------------------------- Revelação ao rolar */
@@ -189,14 +196,17 @@
     button.addEventListener('click', async () => {
       const value = button.dataset.copy;
       const ok = await copyText(value);
-      label.textContent = ok ? 'E-mail copiado ✓' : value;
+      label.textContent = ok ? t('E-mail copiado ✓') : value;
       if (copyStatus) {
         copyStatus.textContent = ok
-          ? 'E-mail copiado para a área de transferência.'
-          : `Não foi possível copiar automaticamente. E-mail: ${value}`;
+          ? t('E-mail copiado para a área de transferência.')
+          : t('Não foi possível copiar automaticamente. E-mail: {email}', { email: value });
       }
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => { label.textContent = original; }, 2400);
+      // volta ao rótulo original no idioma atual
+      timer = window.setTimeout(() => {
+        if (!window.i18n?.restore(label)) label.textContent = original;
+      }, 2400);
     });
   });
 
@@ -296,11 +306,12 @@
   const playerTime = document.querySelector('[data-player-time]');
 
   const syncPlayerPlay = () => {
-    if (playerPlay) playerPlay.textContent = wantsPlay.get(playerVideo) ? 'Pausar' : 'Tocar';
+    if (playerPlay) playerPlay.textContent = wantsPlay.get(playerVideo) ? t('Pausar') : t('Tocar');
   };
 
   if (playerVideo) {
     syncPlayerPlay();
+    document.addEventListener('langchange', syncPlayerPlay);
 
     playerPlay?.addEventListener('click', () => {
       const play = !wantsPlay.get(playerVideo);
@@ -386,7 +397,7 @@
     };
 
     const syncPlay = () => {
-      playButton.textContent = diveVideo.paused ? 'Tocar' : 'Pausar';
+      playButton.textContent = diveVideo.paused ? t('Tocar') : t('Pausar');
     };
 
     const setLayer = (layer) => {
@@ -520,6 +531,7 @@
     });
     diveVideo.addEventListener('play', syncPlay);
     diveVideo.addEventListener('pause', syncPlay);
+    document.addEventListener('langchange', syncPlay);
   }
 
   /* ----------------------------------------- Spotlight nos cards (desktop) */

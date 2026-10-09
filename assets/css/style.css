@@ -621,6 +621,92 @@ a.panel:focus-visible {
   .statusbar__item--wide { display: inline; }
 }
 
+.statusbar__end {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* tradutor Kiroshi: módulo ótico + PT/EN; o bloco amarelo desliza até o idioma ativo */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-switch__optic {
+  position: relative;
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--c-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.45);
+}
+
+.lang-switch__optic::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: var(--c-cyan);
+}
+
+/* durante a tradução a ótica "recalibra" */
+.lang-switch.is-busy .lang-switch__optic {
+  animation: optic-sync 0.65s var(--ease-snap);
+}
+
+.lang-switch__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--c-line-strong);
+}
+
+.lang-switch__track::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background: var(--c-yellow);
+  transition: transform 0.35s var(--ease-snap);
+}
+
+html[data-lang="en"] .lang-switch__track::before {
+  transform: translateX(100%);
+}
+
+.lang-switch__opt {
+  position: relative;
+  min-width: 2.1rem;
+  min-height: 1.5rem;
+  padding: 0 0.45rem;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--c-muted);
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.lang-switch__opt:hover {
+  color: var(--c-text);
+}
+
+.lang-switch__opt[aria-pressed="true"] {
+  color: #000;
+  cursor: default;
+}
+
+.lang-switch__opt:focus-visible {
+  outline: 2px solid var(--c-cyan);
+  outline-offset: 2px;
+}
+
 .pulse {
   width: 6px;
   height: 6px;
@@ -3324,6 +3410,120 @@ html:not(.js) .nav-toggle {
   }
 }
 
+/* 16b. Tradutor Kiroshi (troca de idioma, i18n.js) ======================== */
+/* inglês detectado no <head>: a página espera a tradução para não piscar em português;
+   se o script falhar, ela aparece mesmo assim depois de 1,5 s */
+.i18n-pending body {
+  visibility: hidden;
+  animation: i18n-failsafe 0s linear 1.5s forwards;
+  animation-delay: 1.5s !important;
+}
+
+/* linha de scan que atravessa a tela; o texto de cada elemento troca quando ela passa */
+.kiroshi-scan {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.kiroshi-scan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 7rem;
+  background: linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.07) 75%, rgba(0, 240, 255, 0.85) calc(100% - 2px), var(--c-cyan));
+  box-shadow: 0 1px 16px rgba(0, 240, 255, 0.55);
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.kiroshi-scan.is-running::before {
+  animation: kiroshi-scan var(--sweep, 650ms) linear forwards;
+}
+
+/* textos longos trocam com um glitch rápido de aberração cromática */
+.i18n-glitch {
+  animation: i18n-glitch 0.4s steps(5, end);
+}
+
+/* aviso no estilo HUD */
+.kiroshi-toast {
+  position: fixed;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 95;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.9rem;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: 0.75rem 0.95rem;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-left: 3px solid var(--c-cyan);
+  background: rgba(7, 7, 10, 0.94);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 240, 255, 0.08);
+  font: 500 0.68rem/1.45 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 0.75rem);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.kiroshi-toast.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.kiroshi-toast__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+  color: var(--c-cyan);
+}
+
+.kiroshi-toast__tag::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--c-bg), inset 0 0 0 4px currentColor;
+}
+
+.kiroshi-toast__action {
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(252, 238, 10, 0.55);
+  background: rgba(252, 238, 10, 0.06);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--c-yellow);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.kiroshi-toast__action:hover {
+  background: var(--c-yellow);
+  color: #000;
+}
+
+.kiroshi-toast__action:focus-visible {
+  outline: 2px solid var(--c-cyan);
+  outline-offset: 2px;
+}
+
 /* 17. Revelação ao rolar & keyframes ====================================== */
 .js [data-reveal] {
   opacity: 0;
@@ -3420,6 +3620,30 @@ html:not(.js) .nav-toggle {
 @keyframes bd-sync {
   0%, 65% { opacity: 1; visibility: visible; }
   100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes i18n-failsafe {
+  to { visibility: visible; }
+}
+
+@keyframes kiroshi-scan {
+  0% { opacity: 1; transform: translateY(-100%); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(calc(100vh - 100%)); }
+}
+
+@keyframes i18n-glitch {
+  0% { opacity: 0.25; text-shadow: -3px 0 rgba(255, 0, 60, 0.85), 3px 0 rgba(0, 240, 255, 0.85); }
+  25% { opacity: 1; text-shadow: 2px 0 rgba(255, 0, 60, 0.75), -2px 0 rgba(0, 240, 255, 0.75); }
+  50% { opacity: 0.6; text-shadow: -1px 0 rgba(255, 0, 60, 0.6), 1px 0 rgba(0, 240, 255, 0.6); }
+  75% { opacity: 1; text-shadow: 1px 0 rgba(255, 0, 60, 0.4), -1px 0 rgba(0, 240, 255, 0.4); }
+  100% { opacity: 1; text-shadow: none; }
+}
+
+@keyframes optic-sync {
+  0%, 100% { transform: none; box-shadow: 0 0 6px rgba(0, 240, 255, 0.45); }
+  30% { transform: scale(1.35); box-shadow: 0 0 14px rgba(0, 240, 255, 0.9); }
+  60% { transform: scale(0.85); }
 }
 
 /* 18. Movimento reduzido ================================================== */

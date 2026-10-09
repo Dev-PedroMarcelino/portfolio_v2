@@ -12,6 +12,9 @@
   const dialog = document.querySelector('[data-breach]');
   if (!dialog) return;
 
+  // textos passam pelo tradutor PT/EN (i18n.js); sem ele, ficam em português
+  const t = (text, vars) => (window.i18n ? window.i18n.t(text, vars) : text);
+
   const CODES = ['1C', '55', 'BD', 'E9', '7A', 'FF'];
   const SIZE = 5;
   const BUFFER_SIZE = 6;
@@ -174,7 +177,7 @@
       cell.classList.toggle('is-line', inLine);
       cell.classList.toggle('is-preview', Boolean(inPreview) && !inLine);
       cell.disabled = !isSelectable(r, c);
-      cell.setAttribute('aria-label', `Linha ${r + 1}, coluna ${c + 1}: ${used ? 'já usado' : state.matrix[r][c]}`);
+      cell.setAttribute('aria-label', t('Linha {r}, coluna {c}: {code}', { r: r + 1, c: c + 1, code: used ? t('já usado') : state.matrix[r][c] }));
     });
   }
 
@@ -184,7 +187,7 @@
       const code = state.buffer[i];
       slot.className = `buffer-slot${code ? ' is-filled' : ''}`;
       slot.textContent = code ?? '';
-      if (!code) slot.setAttribute('aria-label', 'vazio');
+      if (!code) slot.setAttribute('aria-label', t('vazio'));
       return slot;
     }));
   }
@@ -194,13 +197,13 @@
       const item = document.createElement('li');
       item.className = `daemon${daemon.done ? ' is-done' : ''}${daemon.failed ? ' is-failed' : ''}`;
       const matched = daemon.done ? daemon.seq.length : progress(state.buffer, daemon.seq);
-      const stateLabel = daemon.done ? 'Carregado' : daemon.failed ? 'Falhou' : 'Pendente';
+      const stateLabel = t(daemon.done ? 'Carregado' : daemon.failed ? 'Falhou' : 'Pendente');
 
       item.innerHTML = `
         <div class="daemon__codes">${daemon.seq.map((code, i) => `<span class="${i < matched ? 'is-matched' : ''}">${code}</span>`).join('')}</div>
         <div>
           <p class="daemon__name">${daemon.name}</p>
-          <p class="daemon__desc">${daemon.desc}</p>
+          <p class="daemon__desc">${t(daemon.desc)}</p>
         </div>
         <span class="daemon__state">${stateLabel}</span>`;
       return item;
@@ -219,22 +222,22 @@
     if (done === state.daemons.length) {
       els.result.classList.add('is-success');
       els.result.innerHTML = `
-        <p class="breach__result-title">Acesso concedido</p>
-        <p>Firewall derrubado e arquivo extraído: <code>contato_pedro.dat</code>. Brincadeiras à parte, o convite é sério — vamos conversar?</p>
+        <p class="breach__result-title">${t('Acesso concedido')}</p>
+        <p>${t('Firewall derrubado e arquivo extraído: <code>contato_pedro.dat</code>. Brincadeiras à parte, o convite é sério — vamos conversar?')}</p>
         <div class="breach__result-actions">
-          <a class="btn btn--sm" href="mailto:pedromarcelinoh7@gmail.com?subject=Breach%20protocol%20conclu%C3%ADdo">Enviar e-mail</a>
-          <a class="btn btn--sm btn--ghost" href="#contato" data-breach-close>Ver contatos</a>
+          <a class="btn btn--sm" href="${t('mailto:pedromarcelinoh7@gmail.com?subject=Breach%20protocol%20conclu%C3%ADdo')}">${t('Enviar e-mail')}</a>
+          <a class="btn btn--sm btn--ghost" href="#contato" data-breach-close>${t('Ver contatos')}</a>
         </div>`;
     } else if (done > 0) {
       els.result.classList.add('is-partial');
       els.result.innerHTML = `
-        <p class="breach__result-title">Acesso parcial</p>
-        <p>Um daemon foi carregado, mas o buffer não deu conta do outro. Gere uma nova matriz e tente fechar as duas sequências.</p>`;
+        <p class="breach__result-title">${t('Acesso parcial')}</p>
+        <p>${t('Um daemon foi carregado, mas o buffer não deu conta do outro. Gere uma nova matriz e tente fechar as duas sequências.')}</p>`;
     } else {
       els.result.classList.add('is-fail');
       els.result.innerHTML = `
-        <p class="breach__result-title">Breach falhou</p>
-        <p>O ICE venceu desta vez. Gere uma nova matriz e tente de novo.</p>`;
+        <p class="breach__result-title">${t('Breach falhou')}</p>
+        <p>${t('O ICE venceu desta vez. Gere uma nova matriz e tente de novo.')}</p>`;
     }
   }
 
@@ -276,6 +279,11 @@
     button.addEventListener('click', open);
   });
 
+  // troca de idioma com o jogo aberto: redesenha os textos gerados aqui
+  document.addEventListener('langchange', () => {
+    if (state) render();
+  });
+
   /* ------------------------------------------------------- Konami code */
   const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
   let konami = 0;
@@ -295,7 +303,7 @@
   /* ------------------------------------------------------------ Console */
   window.breach = () => {
     open();
-    return 'Breach protocol iniciado. Boa sorte, netrunner.';
+    return t('Breach protocol iniciado. Boa sorte, netrunner.');
   };
 
   console.log(
@@ -303,6 +311,6 @@
     'background:#fcee0a;color:#000;font:700 12px monospace;padding:4px 6px',
     'background:#0f0f15;color:#ecebe6;font:500 12px monospace;padding:4px 6px',
   );
-  console.log('%cWake up, samurai. Temos sistemas para construir.', 'color:#00f0ff;font:500 12px monospace');
-  console.log('%c> digite breach() para iniciar o breach protocol · pedromarcelinoh7@gmail.com', 'color:#8b8a92;font:12px monospace');
+  console.log(`%c${t('Wake up, samurai. Temos sistemas para construir.')}`, 'color:#00f0ff;font:500 12px monospace');
+  console.log(`%c${t('> digite breach() para iniciar o breach protocol · pedromarcelinoh7@gmail.com')}`, 'color:#8b8a92;font:12px monospace');
 })();
